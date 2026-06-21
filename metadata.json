@@ -1,0 +1,6 @@
+{
+  "name": "Microsoft Student Ambassadors",
+  "description": "A premium tech aesthetic landing page for MSA featuring scroll-driven SVG morph animations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
