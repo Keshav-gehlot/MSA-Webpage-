@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { useRef, ReactNode } from "react";
+import { useRef, ReactNode, MouseEvent } from "react";
 
 export function MagneticWrapper({ 
   children, 
@@ -18,7 +18,7 @@ export function MagneticWrapper({
   const smX = useSpring(x, springConfig);
   const smY = useSpring(y, springConfig);
 
-  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouse = (e: MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();

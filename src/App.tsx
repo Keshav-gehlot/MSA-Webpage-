@@ -5,6 +5,7 @@
 
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { SponsorSection } from './components/SponsorSection';
 import { WhyJoinSection } from './components/WhyJoinSection';
 import { JourneySection } from './components/JourneySection';
 import { LearningHub } from './components/LearningHub';
@@ -23,6 +24,7 @@ export default function App() {
       <Navbar />
       <main>
         <HeroSection />
+        <SponsorSection />
         <WhyJoinSection />
         <JourneySection />
         <LearningHub />
