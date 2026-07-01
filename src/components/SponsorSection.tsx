@@ -1,5 +1,7 @@
 import { motion } from "motion/react";
-import { Github, Linkedin, Cloud, Database, Send, Shield, Code2, AppWindow } from "lucide-react";
+import { Github, Linkedin, Cloud, Database, Send, Shield, Code2, AppWindow, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { MagneticWrapper } from "./MagneticWrapper";
 
 export function SponsorSection() {
   const sponsors = [
@@ -61,10 +63,25 @@ export function SponsorSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="text-sm md:text-base text-text-muted max-w-2xl mx-auto font-light leading-relaxed"
+            className="text-sm md:text-base text-text-muted max-w-2xl mx-auto font-light leading-relaxed mb-8"
           >
             Empowering students through partnerships, mentorship, and innovation.
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            className="flex justify-center"
+          >
+            <MagneticWrapper>
+              <Link to="/sponsors" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-accent-blue/30 bg-accent-blue/5 text-white font-medium hover:bg-accent-blue/20 transition-all duration-300">
+                Partner with us
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticWrapper>
+          </motion.div>
         </div>
 
         <div className="flex flex-wrap justify-center items-center max-w-4xl mx-auto gap-8 md:gap-x-16 md:gap-y-12">

@@ -3,38 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Navbar } from './components/Navbar';
-import { HeroSection } from './components/HeroSection';
-import { SponsorSection } from './components/SponsorSection';
-import { WhyJoinSection } from './components/WhyJoinSection';
-import { JourneySection } from './components/JourneySection';
-import { LearningHub } from './components/LearningHub';
-import { ImpactSection } from './components/ImpactSection';
-import { TeamSection } from './components/TeamSection';
-import { EventsSection } from './components/EventsSection';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
-import { BackgroundEffects } from './components/BackgroundEffects';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LandingPage } from './pages/LandingPage';
+import { SponsorsAccessPage } from './pages/SponsorsAccessPage';
 
 export default function App() {
   return (
-    <div className="bg-base min-h-screen text-text-main relative z-0">
-      <BackgroundEffects />
-      <Navbar />
-      <main>
-        <HeroSection />
-        <SponsorSection />
-        <WhyJoinSection />
-        <JourneySection />
-        <LearningHub />
-        <ImpactSection />
-        <EventsSection />
-        <TeamSection />
-        <TestimonialsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/sponsors" element={<SponsorsAccessPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

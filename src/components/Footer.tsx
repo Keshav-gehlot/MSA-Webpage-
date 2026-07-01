@@ -23,6 +23,7 @@ export function Footer() {
           © {new Date().getFullYear()} Microsoft Student Ambassadors. All rights reserved.
         </p>
         <div className="flex items-center gap-6 text-sm text-text-muted">
+          <a href="/sponsors" className="hover:text-white transition-colors text-accent-green">Sponsors</a>
           <a href="#" className="hover:text-white transition-colors">Privacy</a>
           <a href="#" className="hover:text-white transition-colors">Terms</a>
         </div>

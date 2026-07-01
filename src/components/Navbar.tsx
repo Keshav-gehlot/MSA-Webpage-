@@ -2,6 +2,7 @@ import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { MagneticWrapper } from "./MagneticWrapper";
+import { Link } from "react-router-dom";
 
 export function Navbar() {
   const { scrollY } = useScroll();
@@ -14,10 +15,10 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
-    { label: "About Us", href: "#about" },
-    { label: "Learning Hub", href: "#learning" },
-    { label: "Events", href: "#events" },
-    { label: "Team", href: "#team" },
+    { label: "About Us", href: "/#about" },
+    { label: "Learning Hub", href: "/#learning" },
+    { label: "Events", href: "/#events" },
+    { label: "Team", href: "/#team" },
   ];
 
   return (
@@ -26,7 +27,7 @@ export function Navbar() {
       className="fixed top-0 inset-x-0 z-50 border-b border-white/5"
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#" className="flex items-center shrink-0">
+        <Link to="/" className="flex items-center shrink-0">
           <svg viewBox="0 0 240 92" className="h-[46px] w-auto hover:opacity-90 transition-opacity">
             <defs>
               <linearGradient id="logo-border" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -42,7 +43,7 @@ export function Navbar() {
             <rect x="74" y="64" width="146" height="5" rx="2.5" fill="#00D9FF"/>
             <rect x="74" y="73" width="146" height="5" rx="2.5" fill="#A855F7"/>
           </svg>
-        </a>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-text-muted">
@@ -51,11 +52,14 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link to="/sponsors" className="hover:text-white transition-colors text-accent-green">
+            Sponsors
+          </Link>
         </div>
 
         <div className="hidden md:flex">
           <MagneticWrapper>
-            <a href="#contact" className="block px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors">
+            <a href="/#contact" className="block px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors">
               Contact
             </a>
           </MagneticWrapper>
@@ -83,7 +87,14 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <a href="#contact" onClick={() => setIsOpen(false)} className="mt-2 text-center w-full px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors">
+          <Link 
+            to="/sponsors"
+            onClick={() => setIsOpen(false)}
+            className="text-accent-green hover:text-white font-medium"
+          >
+            Sponsors
+          </Link>
+          <a href="/#contact" onClick={() => setIsOpen(false)} className="mt-2 text-center w-full px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors">
             Contact
           </a>
         </div>
