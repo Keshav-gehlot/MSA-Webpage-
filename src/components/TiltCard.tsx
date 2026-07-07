@@ -1,13 +1,13 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
 
-interface TiltCardProps {
+interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   maxRotation?: number;
 }
 
-export function TiltCard({ children, className = "", maxRotation = 8 }: TiltCardProps) {
+export function TiltCard({ children, className = "", maxRotation = 8, ...rest }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const x = useMotionValue(0);
@@ -60,7 +60,7 @@ export function TiltCard({ children, className = "", maxRotation = 8 }: TiltCard
   };
 
   if (isTouch || reducedMotion) {
-    return <div className={className}>{children}</div>;
+    return <div className={className} {...rest}>{children}</div>;
   }
 
   return (
@@ -73,6 +73,7 @@ export function TiltCard({ children, className = "", maxRotation = 8 }: TiltCard
         perspective: "1000px",
         transformStyle: "preserve-3d",
       }}
+      {...rest}
     >
       <motion.div
         style={{

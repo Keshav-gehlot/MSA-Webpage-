@@ -26,7 +26,6 @@ export function Navbar() {
 
   const links = [
     { label: "About Us", href: "/#about", id: "about" },
-    { label: "Learning Hub", href: "/#learning", id: "learning" },
     { label: "Events", href: "/#events", id: "events" },
     { label: "Team", href: "/#team", id: "team" },
   ];

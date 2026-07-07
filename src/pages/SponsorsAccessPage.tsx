@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'motion/react';
 import './sponsors.css';
 
 import { TiltCard } from '../components/TiltCard';
-import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Check, Minus } from 'lucide-react';
 
@@ -59,31 +58,33 @@ function makeLine(key: number) {
 const LINES_PER_COL = 26;
 
 function HeroLogs() {
-  const cols = Array.from({ length: 3 }).map((_, c) => {
-    const goingUp = c % 2 === 0;
-    const duration = (34 + c * 7 + Math.random() * 6) * 1.4; // Slower scroll speed
-    const startPct = Math.random() * -50;
-    
-    const lines = Array.from({ length: LINES_PER_COL * 2 }).map((_, i) => makeLine(i));
-    
-    return (
-      <motion.div 
-        key={c}
-        className="sp-log-col opacity-20" // Dimmed further
-        animate={{
-          y: goingUp ? [`${startPct}%`, `${startPct - 50}%`] : [`${startPct - 50}%`, `${startPct}%`]
-        }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: duration
-        }}
-        style={{ y: `${startPct}%` }}
-      >
-        {lines}
-      </motion.div>
-    );
-  });
+  const cols = useMemo(() => {
+    return Array.from({ length: 3 }).map((_, c) => {
+      const goingUp = c % 2 === 0;
+      const duration = (34 + c * 7 + Math.random() * 6) * 1.4; // Slower scroll speed
+      const startPct = Math.random() * -50;
+      
+      const lines = Array.from({ length: LINES_PER_COL * 2 }).map((_, i) => makeLine(i));
+      
+      return (
+        <motion.div 
+          key={c}
+          className="sp-log-col opacity-20" // Dimmed further
+          animate={{
+            y: goingUp ? [`${startPct}%`, `${startPct - 50}%`] : [`${startPct - 50}%`, `${startPct}%`]
+          }}
+          transition={{
+            repeat: Infinity,
+            ease: "linear",
+            duration: duration
+          }}
+          style={{ y: `${startPct}%` }}
+        >
+          {lines}
+        </motion.div>
+      );
+    });
+  }, []);
 
   return (
     <div className="sp-hero-logs" aria-hidden="true">
