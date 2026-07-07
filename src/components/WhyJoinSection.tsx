@@ -1,73 +1,235 @@
-import { motion } from "motion/react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useInView, useMotionValue, useMotionValueEvent } from "motion/react";
 import { BookOpen, Hammer, Rocket } from "lucide-react";
+import projectsData from "../data/projects.json";
+import { useCountUp } from "../hooks/useCountUp";
 
 export function WhyJoinSection() {
-  const pillars = [
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMotion = () => {
+      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMotion();
+    window.addEventListener("resize", checkMotion);
+    return () => window.removeEventListener("resize", checkMotion);
+  }, []);
+
+  const totalProjects = projectsData.length;
+
+  const stages = [
     {
-      icon: BookOpen,
+      id: "learn",
       title: "Learn",
-      desc: "Gain exclusive access to Microsoft training modules, certifications, and hands-on workshops with industry experts.",
-      color: "from-blue-500/20 to-cyan-400/20",
-      iconColor: "text-cyan-400"
+      icon: BookOpen,
+      statValue: 12,
+      statSuffix: "",
+      statLabel: "Technical Workshops",
+      copy: "Master Azure, AI, cloud, and Microsoft technologies through workshops and certifications.",
+      color: "blue",
+      rgb: "59, 130, 246",
     },
     {
-      icon: Hammer,
+      id: "build",
       title: "Build",
-      desc: "Apply your knowledge by building real-world applications using modern AI, cloud, and edge technologies.",
-      color: "from-purple-500/20 to-violet-400/20",
-      iconColor: "text-purple-400"
+      icon: Hammer,
+      statValue: totalProjects,
+      statSuffix: "+",
+      statLabel: "Projects Shipped",
+      copy: "Create real-world projects, contribute to open source, and compete in hackathons.",
+      color: "purple",
+      rgb: "168, 85, 247",
     },
     {
-      icon: Rocket,
+      id: "lead",
       title: "Lead",
-      desc: "Empower your local tech community by organizing hackathons, speaking at events, and mentoring peers.",
-      color: "from-fuchsia-500/20 to-pink-400/20",
-      iconColor: "text-fuchsia-400"
+      icon: Rocket,
+      statValue: 850,
+      statSuffix: "+",
+      statLabel: "Active Students",
+      copy: "Organize events, mentor peers, and grow as a technology leader.",
+      color: "violet",
+      rgb: "139, 92, 246",
     }
   ];
 
+  if (reducedMotion || isMobile) {
+    return (
+      <section className="py-32 px-6 bg-[#050816] overflow-hidden" id="why-join">
+        <div className="max-w-4xl mx-auto space-y-32">
+           {stages.map((stage) => (
+              <MobileStage key={stage.id} stage={stage} />
+           ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="py-24 md:py-32 px-6 bg-surface-light/50 backdrop-blur-sm border-y border-white/5" id="why-join">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 md:mb-20">
-          <span className="text-accent-violet text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">Our Mission</span>
-          <h2 className="text-3xl md:text-5xl font-display font-medium text-white tracking-tight mb-4">
-            Why Join MSA?
-          </h2>
-          <p className="text-sm md:text-base text-text-muted max-w-xl mx-auto font-light leading-relaxed">
-            Accelerate your career, build lasting connections, and make an impact on your campus.
-          </p>
-        </div>
+    <section ref={containerRef} className="relative h-[300vh] bg-[#050816]" id="why-join">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
+        <Background washProgress={scrollYProgress} stages={stages} />
+        
+        {stages.map((stage, i) => {
+          const start = i * 0.333;
+          const end = start + 0.333;
+          
+          const s1 = Math.max(0, start - 0.05);
+          const s2 = Math.max(0.01, start + 0.05);
+          const e1 = Math.min(0.99, end - 0.05);
+          const e2 = Math.min(1, end + 0.05);
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {pillars.map((pillar, i) => (
+          const opacity = useTransform(scrollYProgress, [s1, s2, e1, e2], [0, 1, 1, 0]);
+          const y = useTransform(scrollYProgress, [s1, s2, e1, e2], [50, 0, 0, -50]);
+          const scale = useTransform(scrollYProgress, [s1, s2, e1, e2], [0.9, 1, 1, 1.1]);
+          const pointerEvents = useTransform(scrollYProgress, [start, end], ["auto", "none"]);
+
+          return (
             <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative rounded-3xl p-px bg-gradient-to-b from-white/10 to-transparent hover:from-white/20 transition-all duration-500"
+              key={stage.id}
+              style={{ opacity, y, scale, pointerEvents: pointerEvents as any }}
+              className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10"
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-b opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10 mix-blend-screen" 
-                   style={{ backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))` }} />
-              
-              <div className="relative h-full bg-surface/80 backdrop-blur-xl rounded-[calc(1.5rem-1px)] p-8 overflow-hidden flex flex-col items-center text-center">
-                 {/* Internal glow */}
-                 <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${pillar.color} opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none`} />
-                 
-                 <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:border-white/20 transition-all duration-700 relative">
-                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-30 bg-current rounded-2xl blur-md transition-opacity duration-700 ${pillar.iconColor}`} />
-                   <pillar.icon size={28} className={pillar.iconColor} strokeWidth={1.5} />
-                 </div>
+              <h2 className="text-[120px] md:text-[160px] font-display font-semibold tracking-tighter text-white leading-none mb-12">
+                {stage.title}
+              </h2>
 
-                 <h3 className="text-2xl font-medium text-white mb-4">{pillar.title}</h3>
-                 <p className="text-text-muted text-sm leading-relaxed">{pillar.desc}</p>
-              </div>
+              <IconAnimator scrollYProgress={scrollYProgress} start={start} Icon={stage.icon} color={stage.rgb} />
+              
+              <StatCounter scrollYProgress={scrollYProgress} start={start} end={end} value={stage.statValue} suffix={stage.statSuffix} label={stage.statLabel} color={stage.color} />
+
+              <p className="mt-8 text-xl md:text-2xl text-white/50 max-w-xl mx-auto font-light leading-relaxed">
+                {stage.copy}
+              </p>
             </motion.div>
-          ))}
-        </div>
+          )
+        })}
+
+        <ProgressIndicator progress={scrollYProgress} />
       </div>
     </section>
+  );
+}
+
+function MobileStage({ stage }: { stage: any, key?: any }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  return (
+    <div ref={ref} className="text-center">
+      <h2 className="text-6xl md:text-8xl font-display font-semibold tracking-tighter text-white leading-none mb-8">
+        {stage.title}
+      </h2>
+      <div 
+        className="w-24 h-24 mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-2xl relative overflow-hidden"
+        style={{ boxShadow: `0 0 40px -10px rgba(${stage.rgb}, 0.3)` }}
+      >
+         <div className="absolute inset-0 opacity-20" style={{ background: `radial-gradient(circle at center, rgb(${stage.rgb}), transparent 70%)` }} />
+         <stage.icon size={48} strokeWidth={1.5} color="white" />
+      </div>
+      <StatCounter scrollYProgress={null} start={0} end={1} value={stage.statValue} suffix={stage.statSuffix} label={stage.statLabel} color={stage.color} forceActive={isInView} />
+      <p className="mt-6 text-lg text-white/50 max-w-md mx-auto font-light leading-relaxed">
+        {stage.copy}
+      </p>
+    </div>
+  );
+}
+
+function IconAnimator({ scrollYProgress, start, Icon, color }: any) {
+  const pathLength = useTransform(scrollYProgress, [start, start + 0.15], [0, 1]);
+  
+  return (
+     <motion.div 
+        className="w-24 h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-2xl relative overflow-hidden icon-animator-wrapper"
+        style={{ 
+          boxShadow: `0 0 40px -10px rgba(${color}, 0.3)`,
+          "--path-progress": pathLength 
+        } as any}
+     >
+        <div className="absolute inset-0 opacity-20" style={{ background: `radial-gradient(circle at center, rgb(${color}), transparent 70%)` }} />
+        <Icon size={48} strokeWidth={1.5} color="white" className="relative z-10" />
+        <style>{`
+          .icon-animator-wrapper svg path,
+          .icon-animator-wrapper svg line,
+          .icon-animator-wrapper svg circle,
+          .icon-animator-wrapper svg rect,
+          .icon-animator-wrapper svg polyline,
+          .icon-animator-wrapper svg polygon {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: calc(1000 - (1000 * var(--path-progress)));
+          }
+        `}</style>
+     </motion.div>
+  )
+}
+
+function StatCounter({ scrollYProgress, start, end, value, suffix, label, color, forceActive = false }: any) {
+  const [isActive, setIsActive] = useState(false);
+  const dummyMotionValue = useMotionValue(0);
+  const progressToUse = scrollYProgress || dummyMotionValue;
+
+  useMotionValueEvent(progressToUse, "change", (latest: number) => {
+    if (latest >= start && latest < end) {
+      if (!isActive) setIsActive(true);
+    } else {
+      if (isActive) setIsActive(false);
+    }
+  });
+
+  const { displayValue, isFinished } = useCountUp(0, value, forceActive || isActive, 0);
+
+  return (
+    <div className="flex flex-col items-center">
+      <motion.div 
+         animate={isFinished ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+         transition={{ duration: 0.4 }}
+         className="text-5xl md:text-7xl font-display font-medium text-white mb-2"
+      >
+        {displayValue}{suffix}
+      </motion.div>
+      <div className={`text-sm md:text-base font-semibold uppercase tracking-widest text-${color}-400`}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+function Background({ washProgress, stages }: any) {
+  const bg1 = useTransform(washProgress, [0, 0.33, 0.66], [0.15, 0, 0]);
+  const bg2 = useTransform(washProgress, [0, 0.33, 0.66], [0, 0.15, 0]);
+  const bg3 = useTransform(washProgress, [0.33, 0.66, 1], [0, 0, 0.15]);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-0">
+      <motion.div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, rgba(${stages[0].rgb}, 1), transparent 70%)`, opacity: bg1 }} />
+      <motion.div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, rgba(${stages[1].rgb}, 1), transparent 70%)`, opacity: bg2 }} />
+      <motion.div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, rgba(${stages[2].rgb}, 1), transparent 70%)`, opacity: bg3 }} />
+    </div>
+  );
+}
+
+function ProgressIndicator({ progress }: { progress: any }) {
+  const p1 = useTransform(progress, [0, 0.33], [0, 1]);
+  const p2 = useTransform(progress, [0.33, 0.66], [0, 1]);
+  const p3 = useTransform(progress, [0.66, 1], [0, 1]);
+
+  return (
+    <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50 hidden md:flex">
+      {[p1, p2, p3].map((p, i) => (
+        <div key={i} className="w-1.5 h-16 bg-white/10 rounded-full overflow-hidden">
+          <motion.div className="w-full h-full bg-white origin-top" style={{ scaleY: p }} />
+        </div>
+      ))}
+    </div>
   );
 }

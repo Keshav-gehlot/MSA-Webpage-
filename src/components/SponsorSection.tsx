@@ -1,22 +1,42 @@
-import { motion } from "motion/react";
+import { motion, useAnimationControls } from "motion/react";
 import { Github, Linkedin, Cloud, Database, Send, Shield, Code2, AppWindow, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MagneticWrapper } from "./MagneticWrapper";
+import { useState, useEffect } from "react";
 
 export function SponsorSection() {
   const sponsors = [
-    { name: "Microsoft", icon: AppWindow },
+    { name: "The Souled Store" },
+    { name: "HackerEarth" },
+    { name: "Azure" },
+    { name: "Microsoft" },
     { name: "GitHub", icon: Github },
-    { name: "Azure", icon: Cloud },
-    { name: "LinkedIn", icon: Linkedin },
-    { name: "JetBrains", icon: Code2 },
-    { name: "Postman", icon: Send },
-    { name: "MongoDB", icon: Database },
-    { name: "Cloudflare", icon: Shield },
+    { name: "Subway" },
+    { name: "Sunschool.in" },
+    { name: ".xyz" },
   ];
 
+  const controls = useAnimationControls();
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setIsReducedMotion(mediaQuery.matches);
+    
+    if (!mediaQuery.matches) {
+      controls.start({
+        x: ["0%", "-50%"],
+        transition: {
+          ease: "linear",
+          duration: 35,
+          repeat: Infinity,
+        }
+      });
+    }
+  }, [controls]);
+
   return (
-    <section className="py-24 md:py-40 px-6 relative overflow-hidden bg-transparent" id="sponsors">
+    <section className="py-[120px] px-6 relative overflow-hidden bg-transparent" id="sponsors">
       
       {/* Soft radial glow behind the logo wall */}
       <motion.div 
@@ -35,7 +55,7 @@ export function SponsorSection() {
           initial={{ height: 0, opacity: 0 }}
           whileInView={{ height: 60, opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="w-px bg-gradient-to-b from-transparent to-accent-blue/50 mb-8"
         />
 
@@ -54,7 +74,7 @@ export function SponsorSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="text-3xl md:text-5xl font-display font-medium text-white tracking-tight mb-6"
+            className="text-3xl md:text-5xl font-display font-medium text-white mb-6"
           >
             Trusted by Industry Leaders
           </motion.h2>
@@ -84,21 +104,65 @@ export function SponsorSection() {
           </motion.div>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center max-w-4xl mx-auto gap-8 md:gap-x-16 md:gap-y-12">
-          {sponsors.map((sponsor, i) => (
+        {/* Marquee Container */}
+        {isReducedMotion ? (
+          <div className="flex flex-wrap justify-center items-center max-w-4xl mx-auto gap-8 md:gap-x-16 md:gap-y-12">
+            {sponsors.map((sponsor, i) => (
+              <div
+                key={sponsor.name}
+                className="flex items-center gap-2.5 opacity-60 hover:opacity-100 flex-shrink-0 transition-all duration-500 text-white"
+              >
+                {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
+                <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div 
+            className="w-full max-w-6xl mx-auto overflow-hidden relative"
+            style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}
+            onMouseEnter={() => controls.stop()}
+            onMouseLeave={() => controls.start({
+              x: ["0%", "-50%"],
+              transition: {
+                ease: "linear",
+                duration: 35,
+                repeat: Infinity,
+              }
+            })}
+            aria-label="Our sponsors"
+          >
             <motion.div
-              key={sponsor.name}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 + (i * 0.05) }}
-              className="flex items-center gap-2.5 opacity-40 hover:opacity-100 hover:-translate-y-1 flex-shrink-0 transition-all duration-500 cursor-pointer text-white"
+              animate={controls}
+              className="flex items-center w-max gap-16 md:gap-24"
             >
-              <sponsor.icon size={26} strokeWidth={1.5} />
-              <span className="font-display font-medium text-xl md:text-2xl tracking-tight">{sponsor.name}</span>
+              {/* First Set */}
+              <div className="flex items-center gap-16 md:gap-24">
+                {sponsors.map((sponsor) => (
+                  <div
+                    key={sponsor.name}
+                    className="flex items-center gap-2.5 flex-shrink-0 transition-all duration-300 cursor-pointer text-white grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_0_12px_rgba(0,217,255,0.4)]"
+                  >
+                    {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
+                    <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                  </div>
+                ))}
+              </div>
+              {/* Duplicate Set for Loop */}
+              <div className="flex items-center gap-16 md:gap-24" aria-hidden="true">
+                {sponsors.map((sponsor) => (
+                  <div
+                    key={`${sponsor.name}-dup`}
+                    className="flex items-center gap-2.5 flex-shrink-0 transition-all duration-300 cursor-pointer text-white grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_0_12px_rgba(0,217,255,0.4)]"
+                  >
+                    {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
+                    <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Curved Horizon Bottom Glow */}
@@ -107,8 +171,8 @@ export function SponsorSection() {
           initial={{ opacity: 0, scaleY: 0.8 }}
           whileInView={{ opacity: 1, scaleY: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="w-full h-[800px] absolute top-[150px] border-t border-accent-blue/30 rounded-[100%] shadow-[0_-40px_100px_rgba(109,93,251,0.2)] bg-gradient-to-b from-accent-purple/5 to-transparent"
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full h-[800px] absolute top-[150px] border-t border-accent-blue/30 rounded-[100%]  "
         />
       </div>
 

@@ -1,0 +1,89 @@
+[
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "Get Some Rest",
+    "desc": "Hands-on workshop on building REST APIs with Node.js.",
+    "bullets": [
+      "Introduction to REST architectural style",
+      "Hands-on API development using Node.js",
+      "Testing and debugging endpoints"
+    ],
+    "format": "Workshop",
+    "featured": true,
+    "category": "Workshop",
+    "repo": "https://github.com/MLSA-SRM/GET-some-REST"
+  },
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "SpookyPy",
+    "desc": "Python-powered event introducing programming through game dev.",
+    "bullets": [
+      "Learn Python fundamentals interactively",
+      "Build a spooky-themed game from scratch",
+      "Understand game loops and basic graphics"
+    ],
+    "format": "Workshop",
+    "featured": false,
+    "category": "Workshop",
+    "repo": "https://github.com/MLSA-SRM/SpookyPy"
+  },
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "MarketIN",
+    "desc": "Webinar on personal branding and online presence for students.",
+    "bullets": [
+      "Optimizing LinkedIn profiles for recruiters",
+      "Building a consistent personal brand",
+      "Strategies for online networking"
+    ],
+    "format": "Webinar",
+    "featured": false,
+    "category": "Social"
+  },
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "What the Web",
+    "desc": "Web development event on e-commerce and creative web design.",
+    "bullets": [
+      "Designing creative UI layouts",
+      "E-commerce frontend principles",
+      "Best practices in modern web development"
+    ],
+    "format": "Workshop",
+    "featured": true,
+    "category": "Workshop"
+  },
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "Vinci Di UI",
+    "desc": "Week-long UI/UX design challenge.",
+    "bullets": [
+      "Mastering Figma workflows",
+      "User research and wireframing",
+      "Interactive prototyping and presentation"
+    ],
+    "format": "Hackathon",
+    "featured": false,
+    "category": "Workshop"
+  },
+  {
+    "date": "Past",
+    "status": "Completed",
+    "title": "Resonate",
+    "desc": "48-hour online hackathon across multiple problem-solving tracks.",
+    "bullets": [
+      "Solve real-world problems in 48 hours",
+      "Mentorship from industry experts",
+      "Cross-platform application development"
+    ],
+    "format": "Hackathon",
+    "featured": true,
+    "category": "Hackathon",
+    "repo": "https://github.com/MLSA-SRM/resonate-2"
+  }
+]

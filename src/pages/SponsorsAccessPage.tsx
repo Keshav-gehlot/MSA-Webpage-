@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import './sponsors.css';
 
+import { TiltCard } from '../components/TiltCard';
+import { Link } from 'react-router-dom';
+import { Navbar } from '../components/Navbar';
+import { Check, Minus } from 'lucide-react';
+
 const events = [
   'auth::session established',
   'sponsor::tier=platinum verified',
@@ -54,9 +59,9 @@ function makeLine(key: number) {
 const LINES_PER_COL = 26;
 
 function HeroLogs() {
-  const cols = Array.from({ length: 6 }).map((_, c) => {
+  const cols = Array.from({ length: 3 }).map((_, c) => {
     const goingUp = c % 2 === 0;
-    const duration = (34 + c * 7 + Math.random() * 6);
+    const duration = (34 + c * 7 + Math.random() * 6) * 1.4; // Slower scroll speed
     const startPct = Math.random() * -50;
     
     const lines = Array.from({ length: LINES_PER_COL * 2 }).map((_, i) => makeLine(i));
@@ -64,7 +69,7 @@ function HeroLogs() {
     return (
       <motion.div 
         key={c}
-        className="sp-log-col"
+        className="sp-log-col opacity-20" // Dimmed further
         animate={{
           y: goingUp ? [`${startPct}%`, `${startPct - 50}%`] : [`${startPct - 50}%`, `${startPct}%`]
         }}
@@ -107,22 +112,31 @@ function FAQItem({ question, answer }: { question: string, answer: React.ReactNo
 
   return (
     <div className="sp-faq-item">
-      <summary 
+      <div 
+        role="button"
+        tabIndex={0}
         onClick={(e) => {
           e.preventDefault();
           setOpen(!open);
         }}
-        className={`cursor-pointer list-none flex justify-between items-center font-['Space_Grotesk'] font-bold text-[0.95rem] transition-colors ${open ? 'text-[var(--sp-green)]' : ''}`}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setOpen(!open);
+          }
+        }}
+        className={`cursor-pointer list-none flex justify-between items-center font-display font-bold text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background p-2 rounded-md -mx-2 ${open ? 'text-[var(--color-accent-blue)]' : ''}`}
       >
         {question}
-        <span className={`text-[var(--sp-green)] text-[18px] inline-block transition-transform duration-300 ml-4 shrink-0 ${open ? 'rotate-45' : ''}`}>+</span>
-      </summary>
+        <span className={`text-[var(--color-accent-blue)] text-[18px] inline-block transition-transform duration-300 ml-4 shrink-0 ${open ? 'rotate-45' : ''}`}>+</span>
+      </div>
       <motion.div
         initial={false}
         animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0, y: open ? 0 : -6 }}
+        transition={{ duration: 0.5, ease: "circOut" }}
         className="overflow-hidden"
       >
-        <p ref={contentRef} className="mt-[14px] text-[#999] text-[12.5px] leading-[1.7] max-w-[620px] pb-2">
+        <p ref={contentRef} className="mt-[14px] text-[var(--color-text-dim)] text-[12.5px] leading-[1.7] max-w-[620px] pb-2">
           {answer}
         </p>
       </motion.div>
@@ -144,29 +158,23 @@ export function SponsorsAccessPage() {
   };
 
   return (
-    <div className="sponsors-page">
-      {/* TOP BAR */}
-      <div className="sp-topbar">
-        <div className="sp-topbar-left">
-          <div className="sp-dots"><span></span><span></span><span></span></div>
-          <span className="sp-topbar-path">msa@srmist:<span className="accent">~/sponsors</span>$</span>
+    <div className="sponsors-page min-h-screen bg-canvas flex flex-col">
+      {/* NAVBAR */}
+      <Navbar />
+      
+      {/* BREADCRUMB (CLI Flavor) */}
+      <div className="pt-24 pb-4 px-6 md:px-12 flex items-center gap-3 border-b border-white/5 bg-canvas z-40 relative">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
         </div>
-        <div className="sp-topbar-links">
-          <a href="/">home</a>
-          <a href="/#events">events</a>
-          <a href="/#team">team</a>
-          <a href="#tiers" className="on">sponsor</a>
-        </div>
+        <span className="font-mono text-[13px] text-text-dim tracking-wide">
+          msa@srmist:<span className="text-accent-blue">~/sponsors</span>$
+        </span>
       </div>
 
-      {/* LEFT RAIL */}
-      <div className="sp-rail">
-        <div className="sp-rail-tick"></div><div className="sp-rail-tick"></div><div className="sp-rail-tick"></div>
-        <div className="sp-rail-tick"></div><div className="sp-rail-tick"></div>
-        <div className="sp-rail-label">SPONSORSHIP_2026</div>
-      </div>
-
-      <main>
+      <main className="flex-1 w-full max-w-7xl mx-auto md:px-6">
         {/* HERO */}
         <div className="sp-hero">
           <HeroLogs />
@@ -190,7 +198,7 @@ export function SponsorsAccessPage() {
 
         {/* WHY */}
         <section id="why" data-close="[EOF section::01]" className="sp-section">
-          <Reveal delay={0}><div className="sp-sec-tag"><span className="idx">01</span> — rationale</div></Reveal>
+          <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[01] rationale</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Your logo on a banner does nothing. This does.</h2></Reveal>
           <Reveal delay={2}><p className="sp-sec-p">Three reasons sponsors renew year over year — not because it looks good, but because it converts.</p></Reveal>
 
@@ -221,7 +229,7 @@ export function SponsorsAccessPage() {
 
         {/* TIERS */}
         <section id="tiers" data-close="[EOF section::02]" className="sp-section">
-          <Reveal delay={0}><div className="sp-sec-tag"><span className="idx">02</span> — access levels</div></Reveal>
+          <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[02] access levels</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Four tiers. Click to expand scope.</h2></Reveal>
           <Reveal delay={2}><p className="sp-sec-p">Ordered by depth of access, not price bracket. Platinum owns the room; Bronze gets you on record.</p></Reveal>
 
@@ -229,7 +237,7 @@ export function SponsorsAccessPage() {
 
             {/* PLATINUM */}
             <Reveal delay={3}>
-              <div className="sp-tier-row sp-tier-platinum" data-open={openTiers['platinum']}>
+              <TiltCard maxRotation={4} className="sp-tier-row bg-surface-1 border border-white/5 rounded-3xl overflow-hidden relative sp-tier-platinum" data-open={openTiers['platinum']}>
                 <div className="sp-tier-head" onClick={() => toggleTier('platinum')} role="button" tabIndex={0} onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTier('platinum'); } }}>
                   <div className="sp-tier-flag sp-flag-platinum"></div>
                   <div className="sp-tier-index">01 / 04</div>
@@ -266,12 +274,12 @@ export function SponsorsAccessPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
 
             {/* GOLD */}
             <Reveal delay={4}>
-              <div className="sp-tier-row sp-tier-gold" data-open={openTiers['gold']}>
+              <TiltCard maxRotation={4} className="sp-tier-row bg-surface-1 border border-white/5 rounded-3xl overflow-hidden relative sp-tier-gold" data-open={openTiers['gold']}>
                 <div className="sp-tier-head" onClick={() => toggleTier('gold')} role="button" tabIndex={0} onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTier('gold'); } }}>
                   <div className="sp-tier-flag sp-flag-gold"></div>
                   <div className="sp-tier-index">02 / 04</div>
@@ -307,12 +315,12 @@ export function SponsorsAccessPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
 
             {/* SILVER */}
             <Reveal delay={5}>
-              <div className="sp-tier-row sp-tier-silver" data-open={openTiers['silver']}>
+              <TiltCard maxRotation={4} className="sp-tier-row bg-surface-1 border border-white/5 rounded-3xl overflow-hidden relative sp-tier-silver" data-open={openTiers['silver']}>
                 <div className="sp-tier-head" onClick={() => toggleTier('silver')} role="button" tabIndex={0} onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTier('silver'); } }}>
                   <div className="sp-tier-flag sp-flag-silver"></div>
                   <div className="sp-tier-index">03 / 04</div>
@@ -347,12 +355,12 @@ export function SponsorsAccessPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
 
             {/* BRONZE */}
             <Reveal delay={6}>
-              <div className="sp-tier-row sp-tier-bronze" data-open={openTiers['bronze']}>
+              <TiltCard maxRotation={4} className="sp-tier-row bg-surface-1 border border-white/5 rounded-3xl overflow-hidden relative sp-tier-bronze" data-open={openTiers['bronze']}>
                 <div className="sp-tier-head" onClick={() => toggleTier('bronze')} role="button" tabIndex={0} onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTier('bronze'); } }}>
                   <div className="sp-tier-flag sp-flag-bronze"></div>
                   <div className="sp-tier-index">04 / 04</div>
@@ -386,7 +394,7 @@ export function SponsorsAccessPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
 
           </div>
@@ -394,7 +402,7 @@ export function SponsorsAccessPage() {
 
         {/* COMPARE */}
         <section id="compare" data-close="[EOF section::03]" className="sp-section">
-          <Reveal delay={0}><div className="sp-sec-tag"><span className="idx">03</span> — diff view</div></Reveal>
+          <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[03] diff view</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Tier comparison, flattened.</h2></Reveal>
           <Reveal delay={2}>
             <div className="sp-table-scroll">
@@ -409,14 +417,14 @@ export function SponsorsAccessPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td className="feat">Logo on site sponsors page</td><td className="yes col-p-cell">✓</td><td className="yes">✓</td><td className="yes">✓</td><td className="yes">✓</td></tr>
-                  <tr><td className="feat">Logo on homepage hero</td><td className="yes col-p-cell">✓</td><td className="no">—</td><td className="no">—</td><td className="no">—</td></tr>
-                  <tr><td className="feat">Event hosting / speaking slot</td><td className="yes col-p-cell">✓</td><td className="yes">✓</td><td className="no">—</td><td className="no">—</td></tr>
-                  <tr><td className="feat">Recruiting booth</td><td className="yes col-p-cell">✓</td><td className="yes">✓</td><td className="no">—</td><td className="no">—</td></tr>
-                  <tr><td className="feat">Resume book access</td><td className="yes col-p-cell">First</td><td className="yes">Post-event</td><td className="no">—</td><td className="no">—</td></tr>
-                  <tr><td className="feat">Social media features</td><td className="yes col-p-cell">4x</td><td className="yes">2x</td><td className="yes">1x</td><td className="no">—</td></tr>
-                  <tr><td className="feat">Newsletter mention</td><td className="yes col-p-cell">✓</td><td className="no">—</td><td className="no">—</td><td className="yes">✓</td></tr>
-                  <tr><td className="feat">Discord partner channel</td><td className="yes col-p-cell">✓</td><td className="yes">✓</td><td className="yes">✓</td><td className="yes">✓</td></tr>
+                  <tr><td className="feat">Logo on site sponsors page</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Logo on homepage hero</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Event hosting / speaking slot</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Recruiting booth</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Resume book access</td><td className="yes col-p-cell">First</td><td className="yes">Post-event</td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Social media features</td><td className="yes col-p-cell">4x</td><td className="yes">2x</td><td className="yes">1x</td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Newsletter mention</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Discord partner channel</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
                   <tr><td className="feat">Commitment length</td><td className="yes col-p-cell">Full year</td><td className="yes">Per-event</td><td className="yes">Semester</td><td className="yes">One-off</td></tr>
                 </tbody>
               </table>
@@ -426,7 +434,7 @@ export function SponsorsAccessPage() {
 
         {/* PROCESS */}
         <section id="process" data-close="[EOF section::04]" className="sp-section">
-          <Reveal delay={0}><div className="sp-sec-tag"><span className="idx">04</span> — onboarding</div></Reveal>
+          <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[04] onboarding</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Three steps. No deck required.</h2></Reveal>
 
           <div className="sp-proc-list">
@@ -462,7 +470,7 @@ export function SponsorsAccessPage() {
 
         {/* FAQ */}
         <section id="faq" data-close="[EOF section::05]" className="sp-section">
-          <Reveal delay={0}><div className="sp-sec-tag"><span className="idx">05</span> — faq</div></Reveal>
+          <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[05] faq</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Answers before you ask.</h2></Reveal>
           <Reveal delay={2}>
             <div className="mt-8 flex flex-col">
@@ -495,9 +503,13 @@ export function SponsorsAccessPage() {
             </div>
           </Reveal>
           <Reveal delay={2}>
-            <div className="sp-final-actions">
-              <a href="mailto:msa@srmist.edu.in?subject=Sponsorship%20Inquiry" className="sp-btn sp-btn-solid">email the team →</a>
-              <a href="/#contact" className="sp-btn sp-btn-outline">general contact form</a>
+            <div className="flex flex-wrap gap-4 mt-6">
+              <a href="mailto:msa@srmist.edu.in?subject=Sponsorship%20Inquiry" className="bg-white text-black font-semibold py-3.5 px-6 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                email the team →
+              </a>
+              <a href="/#contact" className="bg-surface-1 border border-white/10 text-white font-semibold py-3.5 px-6 rounded-2xl hover:bg-white/5 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                general contact form
+              </a>
             </div>
           </Reveal>
         </div>

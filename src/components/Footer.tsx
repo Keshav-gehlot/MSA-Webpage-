@@ -1,7 +1,47 @@
+import { motion, useInView } from "motion/react";
+import { useRef, useState, useEffect } from "react";
+
 export function Footer() {
+  const footerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(footerRef);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
   return (
-    <footer className="py-8 px-6 bg-base border-t border-white/5 text-center">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer ref={footerRef} className="relative py-12 px-6 border-t border-white/10 overflow-hidden">
+      {/* Animated Subtle Background */}
+      <div className="absolute inset-0 z-[-1] pointer-events-none">
+        {reducedMotion ? (
+          <div className="absolute inset-0 bg-gradient-to-t from-accent-blue/10 to-transparent" />
+        ) : (
+          <>
+            <motion.div
+              animate={isInView ? {
+                x: [0, 100, 0],
+                y: [0, -50, 0],
+                opacity: [0.1, 0.3, 0.1]
+              } : { opacity: 0 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-[50%] -left-[10%] w-[50%] h-[150%] rounded-full bg-accent-blue/10 blur-[120px]"
+            />
+            <motion.div
+              animate={isInView ? {
+                x: [0, -100, 0],
+                y: [0, 50, 0],
+                opacity: [0.1, 0.2, 0.1]
+              } : { opacity: 0 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-[50%] -right-[10%] w-[60%] h-[150%] rounded-full bg-accent-blue/10 blur-[120px]"
+            />
+          </>
+        )}
+        <div className="absolute inset-0 bg-canvas/60 backdrop-blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
         <div className="flex items-center shrink-0">
           <svg viewBox="0 0 240 92" className="h-[38px] w-auto">
             <defs>
@@ -23,9 +63,9 @@ export function Footer() {
           © {new Date().getFullYear()} Microsoft Student Ambassadors. All rights reserved.
         </p>
         <div className="flex items-center gap-6 text-sm text-text-muted">
-          <a href="/sponsors" className="hover:text-white transition-colors text-accent-green">Sponsors</a>
-          <a href="#" className="hover:text-white transition-colors">Privacy</a>
-          <a href="#" className="hover:text-white transition-colors">Terms</a>
+          <a href="/sponsors" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm text-accent-blue font-medium">Sponsors</a>
+          <a href="#" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm">Privacy</a>
+          <a href="#" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm">Terms</a>
         </div>
       </div>
     </footer>

@@ -1,0 +1,20 @@
+[
+  {
+    "quote": "Being part of MSA completely transformed my university experience. The network, the events, and the mentorship helped me land my first role as a Cloud Engineer.",
+    "author": "Jessica T.",
+    "role": "Alumni / Software Engineer",
+    "company": "Microsoft"
+  },
+  {
+    "quote": "Organizing our campus hackathon gave me the leadership skills I couldn't learn in a classroom. The support from the global community is unmatched.",
+    "author": "Rahul S.",
+    "role": "Gold Ambassador",
+    "company": "SRM Institute"
+  },
+  {
+    "quote": "I came for the Azure credits, but stayed for the incredible community. I've collaborated with peers from three different continents on open-source projects.",
+    "author": "Elena M.",
+    "role": "Technical Lead",
+    "company": "Student Developer"
+  }
+]

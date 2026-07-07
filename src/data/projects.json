@@ -1,0 +1,146 @@
+[
+  {
+    "title": "Lexicon",
+    "repo": "https://github.com/MLSA-SRM/Lexicon-The-Auto-Tagger",
+    "desc": "A browser extension that automatically generates tags for blogs, articles, or posts.",
+    "bullets": [
+      "Automatically extracts key phrases from text",
+      "Improves SEO and content discoverability",
+      "Lightweight browser extension format"
+    ],
+    "tech": "JavaScript",
+    "archived": false
+  },
+  {
+    "title": "StudEaz",
+    "repo": "https://github.com/MLSA-SRM/GCR-Extension",
+    "desc": "An extension to download multiple files from Google Classroom.",
+    "bullets": [
+      "Batch download attachments with one click",
+      "Organizes files into respective course folders",
+      "Saves significant time for students"
+    ],
+    "tech": "JavaScript",
+    "archived": false
+  },
+  {
+    "title": "CenSwear",
+    "repo": "https://github.com/MLSA-SRM/CenSwear",
+    "desc": "A profanity filter API that censors words if you swear!",
+    "bullets": [
+      "RESTful API for profanity detection",
+      "Configurable strictness and word lists",
+      "Easy integration into chat applications"
+    ],
+    "tech": "Python",
+    "archived": false
+  },
+  {
+    "title": "MLSA SRM ChatBot",
+    "repo": "https://github.com/MLSA-SRM/MLSA-SRM-Chatbot",
+    "desc": "A service built for answering FAQs for a closed domain using Azure's Cognitive Search.",
+    "bullets": [
+      "Powered by Azure Cognitive Services",
+      "Provides instant responses to common student queries",
+      "Natural language understanding and intent matching"
+    ],
+    "tech": "Python",
+    "archived": false
+  },
+  {
+    "title": "ES-India Website",
+    "repo": "https://github.com/MLSA-SRM/ES-India",
+    "desc": "A website for ES India (AE Solutions Company).",
+    "bullets": [
+      "Modern and responsive corporate website",
+      "Optimized for performance and accessibility",
+      "Custom components and layouts"
+    ],
+    "tech": "TypeScript",
+    "archived": false
+  },
+  {
+    "title": "CLIK",
+    "repo": "https://github.com/MLSA-SRM/Python-CLIK",
+    "desc": "Command Line Interface for Keys \u2014 a tool to hide and manage API keys and secret/auth tokens.",
+    "bullets": [
+      "Secure local storage for environment variables",
+      "Simple CLI for managing sensitive data",
+      "Prevents accidental credential leaks"
+    ],
+    "tech": "Python",
+    "archived": false
+  },
+  {
+    "title": "TracBucks",
+    "repo": "https://github.com/MLSA-SRM/TracBucks",
+    "desc": "An intuitive expense tracking and personal finance application.",
+    "bullets": [
+      "Track daily expenses and categorize spending",
+      "Visualize financial data with interactive charts",
+      "Simple, user-friendly interface"
+    ],
+    "tech": "Dart",
+    "archived": true
+  },
+  {
+    "title": "Ricerca Corpus Search",
+    "repo": "https://github.com/MLSA-SRM/Ricerca-Corpus-Search",
+    "desc": "An initiative to build a search engine for research papers.",
+    "bullets": [
+      "Advanced querying for academic literature",
+      "Aggregates data from multiple open-access sources",
+      "Improves research efficiency for students"
+    ],
+    "tech": "Python",
+    "archived": true
+  },
+  {
+    "title": "Event Dashboard",
+    "repo": "https://github.com/MLSA-SRM/Event-Dashboard",
+    "desc": "Event dashboard for event organisers.",
+    "bullets": [
+      "Manage registrations and attendee lists",
+      "Real-time analytics for event engagement",
+      "Streamlined check-in process"
+    ],
+    "tech": "TypeScript",
+    "archived": false
+  },
+  {
+    "title": "MLSA Forms",
+    "repo": "https://github.com/MLSA-SRM/MLSA-Forms",
+    "desc": "Custom form generator used to create forms to cater to specific needs.",
+    "bullets": [
+      "Drag-and-drop form builder interface",
+      "Custom validation and submission handling",
+      "Easily export response data"
+    ],
+    "tech": "JavaScript",
+    "archived": false
+  },
+  {
+    "title": "SRM Eats",
+    "repo": "https://github.com/MLSA-SRM/SRM-Eats",
+    "desc": "Crowd-sourced food recommendations in and around SRM campus.",
+    "bullets": [
+      "Discover new dining spots near the university",
+      "Read and write reviews for local eateries",
+      "Community-driven rating system"
+    ],
+    "tech": "JavaScript",
+    "archived": true
+  },
+  {
+    "title": "Here For You",
+    "repo": "https://github.com/MLSA-SRM/MentalHealthApp",
+    "desc": "A mental health monitoring app developed in association with Healthcare Professionals at SRM Institute of Science and Technology.",
+    "bullets": [
+      "Daily mood tracking and journaling features",
+      "Access to professional resources and emergency contacts",
+      "Privacy-first approach to sensitive health data"
+    ],
+    "tech": "Dart",
+    "archived": false
+  }
+]
