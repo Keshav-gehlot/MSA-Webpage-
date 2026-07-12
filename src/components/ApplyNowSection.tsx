@@ -28,9 +28,9 @@ export function ApplyNowSection() {
             <MagneticWrapper>
               <a 
                 href="#apply" 
-                className="group relative inline-flex items-center gap-4 px-10 py-5 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105"
+                style={{ color: "#000" }} className="group relative inline-flex items-center gap-4 px-10 py-5 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105"
               >
-                <span className="relative z-10 text-lg group-hover:text-white transition-colors duration-300">Apply Now</span>
+                <span className="relative z-10 text-lg group-hover:text-white transition-colors duration-300">Join Community</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:text-white transition-colors duration-300" />
                 <div className="absolute inset-0 bg-gradient-to-r from-accent-blue via-purple-400 to-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>

@@ -329,7 +329,7 @@ export default function ShipItGame({ onClose }: ShipItGameProps) {
 
               <button 
                 onClick={(e) => { e.stopPropagation(); startGame(); }}
-                className="w-full py-3 px-6 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-surface-1"
+                style={{ color: "#000" }} className="w-full py-3 px-6 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-surface-1"
               >
                 Run it back
               </button>

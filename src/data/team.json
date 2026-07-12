@@ -1,38 +1,8 @@
 [
-  {
-    "name": "Jane Doe",
-    "role": "Lead Organizer",
-    "domain": "AI & Cloud",
-    "img": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
-    "linkedin": "#",
-    "github": "#",
-    "bio": "Passionate about building scalable AI architectures and fostering tech communities."
-  },
-  {
-    "name": "Alex Chen",
-    "role": "Gold Ambassador",
-    "domain": "Community",
-    "img": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=400&q=80",
-    "linkedin": "#",
-    "github": "#",
-    "bio": "Bridging the gap between code and people. Focused on inclusive tech education."
-  },
-  {
-    "name": "David Kim",
-    "role": "Technical Lead",
-    "domain": "Web Dev",
-    "img": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    "linkedin": "#",
-    "github": "#",
-    "bio": "Full-stack developer obsessed with performance and developer experience."
-  },
-  {
-    "name": "Maya Patel",
-    "role": "Design Lead",
-    "domain": "UI/UX",
-    "img": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
-    "linkedin": "#",
-    "github": "#",
-    "bio": "Crafting intuitive and accessible digital experiences that empower users."
-  }
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
+  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" }
 ]

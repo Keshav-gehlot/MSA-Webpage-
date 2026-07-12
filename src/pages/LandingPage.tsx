@@ -19,12 +19,12 @@ export function LandingPage() {
         <HeroSection />
         <SponsorSection />
         <WhyJoinSection />
-        <ApplyNowSection />
         <JourneySection />
-        <EventsSection />
         <ProjectsSection />
+        <EventsSection />
         <TeamSection />
         <TestimonialsSection />
+        <ApplyNowSection />
         <ContactSection />
       </main>
       <Footer />

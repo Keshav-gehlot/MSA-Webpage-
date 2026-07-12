@@ -96,7 +96,7 @@ export function ContactSection() {
             </div>
 
             <MagneticWrapper className="w-full mt-2">
-              <button type="submit" className="w-full bg-white text-black font-semibold py-3.5 md:py-4 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+              <button type="submit" style={{ color: "#000" }} className="w-full bg-white text-black font-semibold py-3.5 md:py-4 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                 Send Message <Send size={16} />
               </button>
             </MagneticWrapper>

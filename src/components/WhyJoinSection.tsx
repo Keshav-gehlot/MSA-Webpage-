@@ -65,7 +65,7 @@ export function WhyJoinSection() {
 
   if (reducedMotion || isMobile) {
     return (
-      <section className="py-32 px-6 bg-[#050816] overflow-hidden" id="why-join">
+      <section className="py-32 px-6 bg-[#050816] overflow-hidden" id="about">
         <div className="max-w-4xl mx-auto space-y-32">
            {stages.map((stage) => (
               <MobileStage key={stage.id} stage={stage} />
@@ -76,49 +76,52 @@ export function WhyJoinSection() {
   }
 
   return (
-    <section ref={containerRef} className="relative h-[300vh] bg-[#050816]" id="why-join">
+    <section ref={containerRef} className="relative h-[300vh] bg-[#050816]" id="about">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         <Background washProgress={scrollYProgress} stages={stages} />
         
-        {stages.map((stage, i) => {
-          const start = i * 0.333;
-          const end = start + 0.333;
-          
-          const s1 = Math.max(0, start - 0.05);
-          const s2 = Math.max(0.01, start + 0.05);
-          const e1 = Math.min(0.99, end - 0.05);
-          const e2 = Math.min(1, end + 0.05);
-
-          const opacity = useTransform(scrollYProgress, [s1, s2, e1, e2], [0, 1, 1, 0]);
-          const y = useTransform(scrollYProgress, [s1, s2, e1, e2], [50, 0, 0, -50]);
-          const scale = useTransform(scrollYProgress, [s1, s2, e1, e2], [0.9, 1, 1, 1.1]);
-          const pointerEvents = useTransform(scrollYProgress, [start, end], ["auto", "none"]);
-
-          return (
-            <motion.div
-              key={stage.id}
-              style={{ opacity, y, scale, pointerEvents: pointerEvents as any }}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10"
-            >
-              <h2 className="text-[120px] md:text-[160px] font-display font-semibold tracking-tighter text-white leading-none mb-12">
-                {stage.title}
-              </h2>
-
-              <IconAnimator scrollYProgress={scrollYProgress} start={start} Icon={stage.icon} color={stage.rgb} />
-              
-              <StatCounter scrollYProgress={scrollYProgress} start={start} end={end} value={stage.statValue} suffix={stage.statSuffix} label={stage.statLabel} color={stage.color} />
-
-              <p className="mt-8 text-xl md:text-2xl text-white/50 max-w-xl mx-auto font-light leading-relaxed">
-                {stage.copy}
-              </p>
-            </motion.div>
-          )
-        })}
+        {stages.map((stage, i) => (
+          <DesktopStageWrapper key={stage.id} stage={stage} i={i} scrollYProgress={scrollYProgress} />
+        ))}
 
         <ProgressIndicator progress={scrollYProgress} />
       </div>
     </section>
   );
+}
+
+function DesktopStageWrapper({ stage, i, scrollYProgress }: any) {
+  const start = i * 0.333;
+  const end = start + 0.333;
+  
+  const s1 = Math.max(0, start - 0.05);
+  const s2 = Math.max(0.01, start + 0.05);
+  const e1 = Math.min(0.99, end - 0.05);
+  const e2 = Math.min(1, end + 0.05);
+
+  const opacity = useTransform(scrollYProgress, [s1, s2, e1, e2], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [s1, s2, e1, e2], [50, 0, 0, -50]);
+  const scale = useTransform(scrollYProgress, [s1, s2, e1, e2], [0.9, 1, 1, 1.1]);
+  const pointerEvents = useTransform(scrollYProgress, [start, end], ["auto", "none"]);
+
+  return (
+    <motion.div
+      style={{ opacity, y, scale, pointerEvents: pointerEvents as any }}
+      className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10"
+    >
+      <h2 className="text-[120px] md:text-[160px] font-display font-semibold tracking-tighter text-white leading-none mb-12">
+        {stage.title}
+      </h2>
+
+      <IconAnimator scrollYProgress={scrollYProgress} start={start} Icon={stage.icon} color={stage.rgb} />
+      
+      <StatCounter scrollYProgress={scrollYProgress} start={start} end={end} value={stage.statValue} suffix={stage.statSuffix} label={stage.statLabel} color={stage.color} />
+
+      <p className="mt-8 text-xl md:text-2xl text-white/50 max-w-xl mx-auto font-light leading-relaxed">
+        {stage.copy}
+      </p>
+    </motion.div>
+  )
 }
 
 function MobileStage({ stage }: { stage: any, key?: any }) {

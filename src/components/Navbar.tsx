@@ -122,7 +122,7 @@ export function Navbar() {
 
         <div className="hidden md:flex">
           <MagneticWrapper>
-            <a href="/#contact" className="block px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+            <a href="/#contact" style={{ color: "#000" }} className="block px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
               Contact
             </a>
           </MagneticWrapper>
@@ -161,7 +161,7 @@ export function Navbar() {
           >
             Sponsors
           </Link>
-          <a href="/#contact" onClick={() => setIsOpen(false)} className="mt-2 text-center w-full px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+          <a href="/#contact" onClick={() => setIsOpen(false)} style={{ color: "#000" }} className="mt-2 text-center w-full px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
             Contact
           </a>
         </div>

@@ -20,7 +20,7 @@ export function NotFoundPage() {
           
           <Link 
             to="/" 
-            className="group relative inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide text-black transition-all bg-accent-green hover:bg-[#7dffb5] focus:outline-none focus:ring-2 focus:ring-accent-green focus:ring-offset-2 focus:ring-offset-base"
+            className="group relative inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide text-[#000000] transition-all bg-accent-green hover:bg-[#7dffb5] focus:outline-none focus:ring-2 focus:ring-accent-green focus:ring-offset-2 focus:ring-offset-base"
           >
             <span className="font-mono font-bold uppercase tracking-wider">Return to Base</span>
           </Link>

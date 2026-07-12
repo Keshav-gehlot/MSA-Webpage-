@@ -1,19 +1,30 @@
 import { motion, useAnimationControls } from "motion/react";
-import { Github, Linkedin, Cloud, Database, Send, Shield, Code2, AppWindow, ArrowRight } from "lucide-react";
+import { Cloud, Database, Send, Shield, Code2, AppWindow, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MagneticWrapper } from "./MagneticWrapper";
 import { useState, useEffect } from "react";
 
 export function SponsorSection() {
   const sponsors = [
-    { name: "The Souled Store" },
-    { name: "HackerEarth" },
-    { name: "Azure" },
+    { name: "GitHub", logo: "/sponsors/github.svg" },
     { name: "Microsoft" },
-    { name: "GitHub", icon: Github },
+    { name: "HackerEarth", logo: "/sponsors/hackerearth.svg" },
+    { name: "Azure" },
+    { name: "Zebronics" },
+    { name: "Bitgrit" },
+    { name: "Bewakoof" },
+    { name: "The Souled Store" },
     { name: "Subway" },
-    { name: "Sunschool.in" },
+    { name: "Monster Energy" },
+    { name: "Roll Over Ice Creams" },
+    { name: "Sunschool" },
+    { name: "Forech" },
+    { name: "Streams" },
+    { name: "Rock N Roll Café" },
     { name: ".xyz" },
+    { name: "CodeSizzler" },
+    { name: "Altruisty" },
+    { name: "Interview Cake" }
   ];
 
   const controls = useAnimationControls();
@@ -65,9 +76,9 @@ export function SponsorSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-text-dim text-xs font-semibold tracking-[0.2em] uppercase mb-4 block"
+            className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-4 block"
           >
-            Powered by Industry Leaders
+            [ system::partners ]
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 10 }}
@@ -76,7 +87,7 @@ export function SponsorSection() {
             transition={{ delay: 0.4 }}
             className="text-3xl md:text-5xl font-display font-medium text-white mb-6"
           >
-            Trusted by Industry Leaders
+            Access our talent pipeline.
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
@@ -85,7 +96,7 @@ export function SponsorSection() {
             transition={{ delay: 0.5 }}
             className="text-sm md:text-base text-text-muted max-w-2xl mx-auto font-light leading-relaxed mb-8"
           >
-            Empowering students through partnerships, mentorship, and innovation.
+            Your logo on a banner does nothing. We scope partnerships around hiring, product feedback, and community engagement. No ambiguity, no scope creep.
           </motion.p>
           
           <motion.div
@@ -97,7 +108,7 @@ export function SponsorSection() {
           >
             <MagneticWrapper>
               <Link to="/sponsors" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-accent-blue/30 bg-accent-blue/5 text-white font-medium hover:bg-accent-blue/20 transition-all duration-300">
-                Partner with us
+                View partnership tiers
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </MagneticWrapper>
@@ -112,8 +123,11 @@ export function SponsorSection() {
                 key={sponsor.name}
                 className="flex items-center gap-2.5 opacity-60 hover:opacity-100 flex-shrink-0 transition-all duration-500 text-white"
               >
-                {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
-                <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                {sponsor.logo ? (
+                  <img src={sponsor.logo} alt={sponsor.name} className="h-8 md:h-10 w-auto object-contain" />
+                ) : (
+                  <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                )}
               </div>
             ))}
           </div>
@@ -143,8 +157,11 @@ export function SponsorSection() {
                     key={sponsor.name}
                     className="flex items-center gap-2.5 flex-shrink-0 transition-all duration-300 cursor-pointer text-white grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_0_12px_rgba(0,217,255,0.4)]"
                   >
-                    {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
-                    <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} className="h-8 md:h-10 w-auto object-contain" />
+                    ) : (
+                      <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -155,8 +172,11 @@ export function SponsorSection() {
                     key={`${sponsor.name}-dup`}
                     className="flex items-center gap-2.5 flex-shrink-0 transition-all duration-300 cursor-pointer text-white grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_0_12px_rgba(0,217,255,0.4)]"
                   >
-                    {sponsor.icon && <sponsor.icon size={26} strokeWidth={1.5} />}
-                    <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} className="h-8 md:h-10 w-auto object-contain" />
+                    ) : (
+                      <span className="font-display font-medium text-xl md:text-2xl">{sponsor.name}</span>
+                    )}
                   </div>
                 ))}
               </div>
