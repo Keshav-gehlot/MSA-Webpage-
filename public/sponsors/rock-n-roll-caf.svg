@@ -1,0 +1,15 @@
+<svg fill="#ffffff" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="20" fill="#ffffff" fill-opacity="0.1"/>
+      <style>
+        .sponsor-initials {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          font-weight: 700;
+          font-size: 40px;
+          letter-spacing: 0.05em;
+          text-anchor: middle;
+          dominant-baseline: central;
+          fill: #ffffff;
+        }
+      </style>
+      <text x="50" y="52" class="sponsor-initials">RN</text>
+    </svg>

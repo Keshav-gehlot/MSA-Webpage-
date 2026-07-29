@@ -24,11 +24,24 @@ export function HeroSection() {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }, []);
   
+  const requestRef = useRef<number | undefined>(undefined);
+  
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (isTouch || reducedMotion) return;
+    
+    if (requestRef.current !== undefined) {
+      cancelAnimationFrame(requestRef.current);
+    }
+    
     const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    
+    requestRef.current = requestAnimationFrame(() => {
+      mouseX.set(clientX - rect.left);
+      mouseY.set(clientY - rect.top);
+      requestRef.current = undefined;
+    });
   };
 
   /**
@@ -106,6 +119,33 @@ export function HeroSection() {
     <section ref={containerRef} className="relative h-[250vh] bg-transparent" id="home">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center" onMouseMove={handleMouseMove}>
         
+        {/* Animated Background Grid */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden" style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px',
+          maskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)'
+        }}>
+          <motion.div
+            className="absolute -inset-[100%] opacity-30"
+            style={{
+              background: 'linear-gradient(to bottom right, transparent 45%, rgba(109, 93, 251, 0.8) 50%, transparent 55%)',
+            }}
+            animate={{
+              x: ['-50%', '50%'],
+              y: ['-50%', '50%']
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'linear'
+            }}
+          />
+        </div>
+
         {!isTouch && !reducedMotion && (
           <motion.div
             className="absolute pointer-events-none mix-blend-screen"

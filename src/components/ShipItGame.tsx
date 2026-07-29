@@ -16,7 +16,7 @@ export default function ShipItGame({ onClose }: ShipItGameProps) {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
   
   // Game state refs (to avoid stale closures in rAF)
   const state = useRef({
@@ -133,12 +133,18 @@ export default function ShipItGame({ onClose }: ShipItGameProps) {
 
     // Resize canvas
     const updateSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      state.current.player.y = canvas.height - GROUND_HEIGHT - state.current.player.height;
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        state.current.player.y = canvasRef.current.height - GROUND_HEIGHT - state.current.player.height;
+      }
     };
     window.addEventListener('resize', updateSize);
-    updateSize();
+    
+    // Initial size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    state.current.player.y = canvas.height - GROUND_HEIGHT - state.current.player.height;
 
     startGame();
 

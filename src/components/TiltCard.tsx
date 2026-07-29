@@ -73,7 +73,7 @@ export function TiltCard({ children, className = "", maxRotation = 8, ...rest }:
         perspective: "1000px",
         transformStyle: "preserve-3d",
       }}
-      {...rest}
+      {...(rest as any)}
     >
       <motion.div
         style={{

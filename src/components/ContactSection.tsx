@@ -1,7 +1,24 @@
 import { Github, Instagram, Linkedin, Send } from "lucide-react";
 import { MagneticWrapper } from "./MagneticWrapper";
+import { useState } from "react";
 
 export function ContactSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (isSubmitting) {
+      e.preventDefault();
+      return;
+    }
+    setIsSubmitting(true);
+    
+    // We don't prevent default here as we want formspree to handle the submission,
+    // but we do block rapid re-submissions for the next few seconds.
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 3000);
+  };
+
   return (
     <section className="py-[120px] px-6 bg-transparent" id="contact">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -27,13 +44,13 @@ export function ContactSection() {
             <div>
               <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-3">Follow Us</p>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Linkedin size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Instagram size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Github size={18} />
                 </a>
               </div>
@@ -45,7 +62,7 @@ export function ContactSection() {
         <div className="p-6 md:p-10 rounded-3xl bg-surface-1 border border-white/10 relative">
           <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           
-          <form className="flex flex-col gap-5" action="https://formspree.io/f/mqkopkvo" method="POST">
+          <form className="flex flex-col gap-5" action="https://formspree.io/f/mqkopkvo" method="POST" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-5">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-text-muted ml-1" htmlFor="firstName">First Name</label>
@@ -96,8 +113,13 @@ export function ContactSection() {
             </div>
 
             <MagneticWrapper className="w-full mt-2">
-              <button type="submit" style={{ color: "#000" }} className="w-full bg-white text-black font-semibold py-3.5 md:py-4 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-                Send Message <Send size={16} />
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                style={{ color: "#000" }} 
+                className={`w-full bg-white text-black font-semibold py-3.5 md:py-4 rounded-2xl transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'} <Send size={16} />
               </button>
             </MagneticWrapper>
           </form>

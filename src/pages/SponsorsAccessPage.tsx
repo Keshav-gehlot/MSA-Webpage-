@@ -1,3 +1,4 @@
+import { sponsors } from '../data/sponsors';
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'motion/react';
 import './sponsors.css';
@@ -57,6 +58,17 @@ function makeLine(key: number) {
 const LINES_PER_COL = 26;
 
 function HeroLogs() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 860px)');
+    const checkMobile = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    
+    setIsMobile(mq.matches);
+    mq.addEventListener('change', checkMobile);
+    return () => mq.removeEventListener('change', checkMobile);
+  }, []);
+
   const cols = useMemo(() => {
     return Array.from({ length: 3 }).map((_, c) => {
       const goingUp = c % 2 === 0;
@@ -85,6 +97,8 @@ function HeroLogs() {
     });
   }, []);
 
+  if (isMobile) return null;
+
   return (
     <div className="sp-hero-logs" aria-hidden="true">
       {cols}
@@ -93,12 +107,27 @@ function HeroLogs() {
 }
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
+    
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  if (reducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.62, ease: [0.215, 0.61, 0.355, 1], delay: delay * 0.09 }}
+      transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1], delay: delay * 0.09 }}
       className={className}
     >
       {children}
@@ -202,7 +231,7 @@ export function SponsorsAccessPage() {
             <span className="blink">●</span> 10 YEARS OF MICROSOFT STUDENT AMBASSADORS
           </div>
           <h1 className="sp-hero-title disp">
-            Be a <span className="mark">Force for Good.</span>
+            Be a <span className="mark">Force</span> for Good.
           </h1>
           <p className="sp-sec-p mt-4 text-xl">
             SRM Sponsorship Opportunities
@@ -215,7 +244,7 @@ export function SponsorsAccessPage() {
 
         
         {/* WHY SPONSOR */}
-        <section id="why" data-close="[EOF section::01]" className="sp-section">
+        <section id="why" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[01] why sponsor</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Advertising & Your Reach</h2></Reveal>
           <Reveal delay={2}><p className="sp-sec-p">Join us and put your brand in front of the sharpest student minds in India. Sponsoring an MSA SRM event is not just advertising — it's a strategic investment into tomorrow's workforce.</p></Reveal>
@@ -228,17 +257,25 @@ export function SponsorsAccessPage() {
         </section>
 
                 {/* PAST SPONSORS */}
-        <section id="past-sponsors" data-close="[EOF section::02]" className="sp-section">
+        <section id="past-sponsors" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[02] trust & credibility</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Past Sponsors</h2></Reveal>
           <Reveal delay={2}>
-            <div className="sp-sponsor-wall text-center">
-              <p className="text-xl text-text-dim">Proudly partnered with over 15+ industry leaders across technology, lifestyle, and education.</p>
+            <div className="sp-sponsor-wall">
+              <p className="text-xl text-text-dim text-center mb-10">Proudly partnered with over 15+ industry leaders across technology, lifestyle, and education.</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {sponsors.map((sponsor) => (
+                  <div key={sponsor.name} className="flex flex-col items-center justify-center p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
+                    <img src={sponsor.logo} alt={sponsor.name} className="h-10 w-auto opacity-70 group-hover:opacity-100 transition-opacity mb-4" />
+                    <span className="text-xs font-mono text-text-dim text-center">{sponsor.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
         </section>
 {/* TIERS */}
-        <section id="tiers" data-close="[EOF section::03]" className="sp-section">
+        <section id="tiers" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[03] investment tiers</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Sponsorship Opportunities</h2></Reveal>
           
@@ -268,7 +305,7 @@ export function SponsorsAccessPage() {
                       <li>Dedicated Instagram/LinkedIn Post</li>
                       <li>Dedicated Instagram Story</li>
                       <li>Compiled Instagram Post / Reel</li>
-                      <li>Mention on MLSA SRM Website</li>
+                      <li>Mention on MSA SRM Website</li>
                       <li>Offline Merchandise Distribution</li>
                     </ul>
                     <div className="sp-tier-side">
@@ -307,7 +344,7 @@ export function SponsorsAccessPage() {
                       <li>Access to Event Resume Book</li>
                       <li>Dedicated Instagram Story</li>
                       <li>Compiled Instagram Post / Reel</li>
-                      <li>Mention on MLSA SRM Website</li>
+                      <li>Mention on MSA SRM Website</li>
                       <li>Offline Merchandise Distribution</li>
                     </ul>
                     <div className="sp-tier-side">
@@ -344,7 +381,7 @@ export function SponsorsAccessPage() {
                     <ul className="sp-perk-list">
                       <li>Dedicated Instagram Story</li>
                       <li>Compiled Instagram Post / Reel</li>
-                      <li>Mention on MLSA SRM Website</li>
+                      <li>Mention on MSA SRM Website</li>
                       <li>Offline Merchandise Distribution</li>
                     </ul>
                     <div className="sp-tier-side">
@@ -381,7 +418,7 @@ export function SponsorsAccessPage() {
                     <ul className="sp-perk-list">
                       <li>Dedicated Instagram Story</li>
                       <li>Compiled Instagram Post / Reel</li>
-                      <li>Mention on MLSA SRM Website</li>
+                      <li>Mention on MSA SRM Website</li>
                       <li>Offline Merchandise Distribution</li>
                     </ul>
                     <div className="sp-tier-side">
@@ -401,7 +438,7 @@ export function SponsorsAccessPage() {
         </section>
 
         {/* COMPARE */}
-        <section id="compare" data-close="[EOF section::04]" className="sp-section">
+        <section id="compare" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[04] what you get</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Benefits at a Glance</h2></Reveal>
           <Reveal delay={2}>
@@ -422,7 +459,7 @@ export function SponsorsAccessPage() {
                   <tr><td className="feat">Dedicated Instagram/LinkedIn Post</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
                   <tr><td className="feat">Dedicated Instagram Story</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
                   <tr><td className="feat">Compiled Instagram Post / Reel</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
-                  <tr><td className="feat">Mention on MLSA SRM Website</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
+                  <tr><td className="feat">Mention on MSA SRM Website</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
                   <tr><td className="feat">Resume Book Access</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td><td className="no"><Minus size={16} className="mx-auto" /></td></tr>
                   <tr><td className="feat">Offline Merchandise Distribution</td><td className="yes col-p-cell"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td><td className="yes"><Check size={16} className="mx-auto" /></td></tr>
                 </tbody>
@@ -432,7 +469,7 @@ export function SponsorsAccessPage() {
         </section>
 
                 {/* ABOUT MSA + SRM */}
-        <section id="about" data-close="[EOF section::05]" className="sp-section">
+        <section id="about" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[05] about msa srm</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Microsoft Student Ambassadors, SRM</h2></Reveal>
           <Reveal delay={2}><p className="sp-sec-p">Microsoft Student Ambassadors SRM is a decade-old technical powerhouse at SRM Institute of Science and Technology (SRMIST). We ignite the spark in zealous, forward-thinking students engineering the next generation of innovators at one of India's most reputed universities. Through relentless workshops, technical talks, industry webinars, and large-scale events, we cultivate an ecosystem where bold ideas flourish.</p></Reveal>
@@ -446,7 +483,7 @@ export function SponsorsAccessPage() {
           </Reveal>
         </section>
 {/* PAST EVENTS */}
-        <section id="events" data-close="[EOF section::06]" className="sp-section">
+        <section id="events" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[06] highlights</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Past Events</h2></Reveal>
           <div className="sp-why-list">
@@ -463,7 +500,7 @@ export function SponsorsAccessPage() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" data-close="[EOF section::07]" className="sp-section">
+        <section id="faq" className="sp-section">
           <Reveal delay={0}><div className="text-accent-blue text-sm font-semibold tracking-[0.2em] uppercase mb-2 block">[07] faq</div></Reveal>
           <Reveal delay={1}><h2 className="sp-sec-h disp">Answers before you ask.</h2></Reveal>
           <Reveal delay={2}>
@@ -506,8 +543,8 @@ export function SponsorsAccessPage() {
                 Yashasvi: <a href="tel:+919929170166" className="text-accent-blue hover:underline">+91 99291 70166</a><br/>
                 Aniruddha: <a href="tel:+917980378474" className="text-accent-blue hover:underline">+91 79803 78474</a>
               </div>
-              <div><strong>Website:</strong> <a href="https://mlsasrm.in" target="_blank" rel="noreferrer" className="text-accent-blue hover:underline">mlsasrm.in</a></div>
-              <div><strong>Socials:</strong> <a href="https://instagram.com/mlsa.srm" target="_blank" rel="noreferrer" className="text-accent-blue hover:underline">@mlsa.srm (Insta)</a>, <a href="https://linkedin.com/company/mlsa-srm" target="_blank" rel="noreferrer" className="text-accent-blue hover:underline">@mlsa-srm (LinkedIn)</a></div>
+              <div><strong>Website:</strong> <a href="https://mlsasrm.in" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:underline">mlsasrm.in</a></div>
+              <div><strong>Socials:</strong> <a href="https://instagram.com/mlsa.srm" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:underline">@mlsa.srm (Insta)</a>, <a href="https://linkedin.com/company/mlsa-srm" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:underline">@mlsa-srm (LinkedIn)</a></div>
             </div>
           </Reveal>
           

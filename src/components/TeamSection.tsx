@@ -110,6 +110,8 @@ function TeamCard({ member }: { member: any, key?: any }) {
               <img 
                 src={member.img} 
                 alt={member.name}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover rounded-2xl"
               />
             )}
