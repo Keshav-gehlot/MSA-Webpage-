@@ -1,8 +1,13 @@
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { MagneticWrapper } from "./MagneticWrapper";
 
 export function ApplyNowSection() {
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  useEffect(() => {
+    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
   return (
     <section className="py-24 px-6 relative bg-[#050816] overflow-hidden" id="apply">
       {/* Background glow */}
@@ -15,7 +20,7 @@ export function ApplyNowSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: isReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         >
           <h2 className="text-5xl md:text-7xl font-display font-semibold tracking-tighter text-white mb-6">
             Ready to Build the Future?

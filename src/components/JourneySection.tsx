@@ -1,8 +1,13 @@
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { cn } from "../lib/utils";
 
 export function JourneySection() {
+    const [isReducedMotion, setIsReducedMotion] = useState(false);
+    useEffect(() => {
+      setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }, []);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -70,7 +75,7 @@ export function JourneySection() {
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: isReducedMotion ? 0 : 0.7, delay: isReducedMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <span className={`${step.color} font-mono text-xs md:text-sm tracking-widest font-semibold block mb-2`}>{step.num}</span>
                     <h3 className="text-white font-medium text-lg md:text-xl mb-2">{step.title}</h3>

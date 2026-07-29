@@ -282,7 +282,7 @@ export function HeroSection() {
            </p>
            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto font-sans">
               <MagneticWrapper className="w-full sm:w-auto">
-                <a href="#about" style={{ color: "#000" }} className="block w-full sm:w-auto px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors text-sm">
+                <a href="#why-join" style={{ color: "#000" }} className="block w-full sm:w-auto px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors text-sm">
                   Join Community
                 </a>
               </MagneticWrapper>

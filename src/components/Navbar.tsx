@@ -25,7 +25,7 @@ export function Navbar() {
   const lastClickTime = useRef(0);
 
   const links = [
-    { label: "About Us", href: "/#about", id: "about" },
+    { label: "About Us", href: "/#why-join", id: "why-join" },
     { label: "Events", href: "/#events", id: "events" },
     { label: "Team", href: "/#team", id: "team" },
   ];

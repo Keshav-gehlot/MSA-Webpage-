@@ -44,13 +44,13 @@ export function ContactSection() {
             <div>
               <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-3">Follow Us</p>
               <div className="flex gap-3">
-                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="https://linkedin.com/company/mlsa-srm" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Linkedin size={18} />
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="https://instagram.com/mlsa.srm" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Instagram size={18} />
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+                <a href="https://github.com/MLSA-SRM" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface-1 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
                   <Github size={18} />
                 </a>
               </div>

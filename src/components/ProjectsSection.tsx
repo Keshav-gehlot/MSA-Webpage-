@@ -1,15 +1,19 @@
 import { ExternalLink, FolderGit2 } from "lucide-react";
 import { motion } from "motion/react";
 import projects from "../data/projects.json";
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 
 const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  useEffect(() => {
+    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0, y: 14, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: isReducedMotion ? 0 : 0.7, delay: isReducedMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
       className="group p-6 md:p-8 rounded-3xl bg-surface-1 border border-white/10 transition-all hover:border-white/20 hover:-translate-y-1 flex flex-col md:flex-row gap-6 md:gap-8 h-full will-change-transform"
     >
       {/* Content area (left) */}
@@ -42,8 +46,7 @@ const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
           
           <a 
             href={project.repo} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+            target="_blank" rel="noopener noreferrer" 
             className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:text-accent-blue transition-colors ml-auto relative z-10"
           >
             Repository <ExternalLink size={16} />
@@ -54,8 +57,7 @@ const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
       {/* Tile area (right) */}
       <a 
         href={project.repo} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+        target="_blank" rel="noopener noreferrer" 
         className="w-full md:w-32 lg:w-40 h-32 md:h-auto rounded-2xl border border-white/10 flex flex-col items-center justify-center shrink-0 transition-colors relative overflow-hidden bg-gradient-to-br from-accent-blue/10 via-transparent to-transparent group-hover:from-accent-blue/20 group-hover:via-accent-blue/10 group-hover:border-accent-blue/30"
       >
         <FolderGit2 size={32} className="text-white/60 mb-2 group-hover:text-accent-blue transition-colors relative z-10 group-hover:scale-110 duration-500" />

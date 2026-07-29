@@ -65,7 +65,7 @@ export function WhyJoinSection() {
 
   if (reducedMotion || isMobile) {
     return (
-      <section className="py-32 px-6 bg-[#050816] overflow-hidden" id="about">
+      <section className="py-32 px-6 bg-[#050816] overflow-hidden" id="why-join">
         <div className="max-w-4xl mx-auto space-y-32">
            {stages.map((stage) => (
               <MobileStage key={stage.id} stage={stage} />
@@ -76,7 +76,7 @@ export function WhyJoinSection() {
   }
 
   return (
-    <section ref={containerRef} className="relative h-[300vh] bg-[#050816]" id="about">
+    <section ref={containerRef} className="relative h-[300vh] bg-[#050816]" id="why-join">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         <Background washProgress={scrollYProgress} stages={stages} />
         

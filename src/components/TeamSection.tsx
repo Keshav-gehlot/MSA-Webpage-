@@ -209,7 +209,7 @@ export function TeamSection() {
 
         <div className="flex justify-center mt-16">
           <MagneticWrapper>
-            <a href="#contact" style={{ color: "#000" }} className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors text-sm">
+            <a href="#apply" style={{ color: "#000" }} className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors text-sm">
               Reach out to join
             </a>
           </MagneticWrapper>

@@ -1,8 +1,13 @@
+import { useState, useEffect } from "react";
 import { AppWindow, Cloud, Code2, Database, Shield, Palette, ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "../lib/utils";
 
 export function LearningHub() {
+    const [isReducedMotion, setIsReducedMotion] = useState(false);
+    useEffect(() => {
+      setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }, []);
   const categories = [
     { icon: Database, title: "AI & Machine Learning", desc: "Build intelligent apps using Azure OpenAI and foundation models.", level: "Advanced", colSpan: "md:col-span-2", featured: true, iconColor: "text-blue-400", bgGlow: "bg-blue-500/10", borderTop: "border-t-blue-500", levelColor: "text-red-400 border-red-400/30 bg-red-400/10" },
     { icon: Cloud, title: "Cloud Architecture", desc: "Master scaling and deployment with Azure.", level: "Intermediate", iconColor: "text-cyan-400", bgGlow: "bg-cyan-500/10", borderTop: "border-t-cyan-500", levelColor: "text-amber-400 border-amber-400/30 bg-amber-400/10" },
@@ -34,7 +39,7 @@ export function LearningHub() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: isReducedMotion ? 0 : 0.7, delay: isReducedMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
                 "group relative p-6 md:p-8 rounded-3xl bg-surface-1 border border-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col overflow-hidden",
                 item.colSpan

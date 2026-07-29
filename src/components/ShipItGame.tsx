@@ -12,6 +12,10 @@ const GAME_SPEED = 5;
 const GROUND_HEIGHT = 50;
 
 export default function ShipItGame({ onClose }: ShipItGameProps) {
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  useEffect(() => {
+    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -300,6 +304,7 @@ export default function ShipItGame({ onClose }: ShipItGameProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: isReducedMotion ? 0 : 0.3 }}
         className="fixed inset-0 z-50 bg-canvas/95 backdrop-blur-sm flex flex-col"
         onClick={jump} // Tap to jump anywhere
       >

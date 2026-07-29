@@ -1,13 +1,13 @@
 import { Navbar } from '../components/Navbar';
 import { HeroSection } from '../components/HeroSection';
-import { SponsorSection } from '../components/SponsorSection';
 import { WhyJoinSection } from '../components/WhyJoinSection';
-import { ApplyNowSection } from '../components/ApplyNowSection';
 import { JourneySection } from '../components/JourneySection';
-import { TeamSection } from '../components/TeamSection';
-import { EventsSection } from '../components/EventsSection';
 import { ProjectsSection } from '../components/ProjectsSection';
+import { EventsSection } from '../components/EventsSection';
+import { TeamSection } from '../components/TeamSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
+import { SponsorSection } from '../components/SponsorSection';
+import { ApplyNowSection } from '../components/ApplyNowSection';
 import { ContactSection } from '../components/ContactSection';
 import { Footer } from '../components/Footer';
 
@@ -17,13 +17,13 @@ export function LandingPage() {
       <Navbar />
       <main>
         <HeroSection />
-        <SponsorSection />
         <WhyJoinSection />
         <JourneySection />
         <ProjectsSection />
         <EventsSection />
         <TeamSection />
         <TestimonialsSection />
+        <SponsorSection />
         <ApplyNowSection />
         <ContactSection />
       </main>

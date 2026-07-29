@@ -11,6 +11,8 @@ const categories = ["All", "Workshop", "Hackathon", "Social"];
 export function EventsSection() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentCategory = searchParams.get("category") || "All";
+  const [reducedMotion, setReducedMotion] = useState(false);
+  useEffect(() => { setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -83,7 +85,7 @@ export function EventsSection() {
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: reducedMotion ? 0 : 0.7, delay: reducedMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                     className={cn(
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black",
                       "flex w-full items-center justify-start relative pl-12 md:pl-0",
@@ -154,14 +156,11 @@ export function EventsSection() {
           </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+        <motion.div initial={{ opacity: reducedMotion ? 1 : 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: reducedMotion ? 0 : 0.3 }}
           className="mt-16 md:mt-24 text-center"
         >
           <MagneticWrapper>
-            <a href="#" className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-white transition-colors border-b border-white/10 hover:border-white pb-1">
+            <a href="#events" className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-white transition-colors border-b border-white/10 hover:border-white pb-1">
               Browse full calendar <ExternalLink size={14} />
             </a>
           </MagneticWrapper>
