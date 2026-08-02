@@ -1,16 +1,22 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { motion } from "motion/react";
 import { MagneticWrapper } from "./MagneticWrapper";
 import { useState, useEffect } from "react";
 import teamData from "../data/team.json";
+export interface TeamMember {
+  name: string;
+  role: string;
+  bio?: string;
+  img?: string | null;
+  linkedin?: string;
+  github?: string;
+}
+
 import { Github, Linkedin } from "lucide-react";
 import { cn } from "../lib/utils";
 
 function PlaceholderAvatar() {
-  const [reducedMotion, setReducedMotion] = useState(false);
-  
-  useEffect(() => {
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   return (
     <div className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden group">
@@ -76,7 +82,7 @@ function PlaceholderAvatar() {
   );
 }
 
-function TeamCard({ member }: { member: any, key?: any }) {
+function TeamCard({ member }: { member: TeamMember }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const isPlaceholder = !member.img;
 
@@ -108,7 +114,7 @@ function TeamCard({ member }: { member: any, key?: any }) {
               <PlaceholderAvatar />
             ) : (
               <img 
-                src={member.img} 
+                src={member.img || undefined} 
                 alt={member.name}
                 loading="lazy"
                 decoding="async"
@@ -152,6 +158,7 @@ function TeamCard({ member }: { member: any, key?: any }) {
               }}
               tabIndex={isFlipped ? 0 : -1}
               aria-disabled={!member.linkedin}
+              aria-label={member.linkedin ? `LinkedIn profile of ${member.name}` : "LinkedIn profile not available"}
               className={cn(
                 "p-3 rounded-full transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue",
                 member.linkedin 
@@ -171,6 +178,7 @@ function TeamCard({ member }: { member: any, key?: any }) {
               }}
               tabIndex={isFlipped ? 0 : -1}
               aria-disabled={!member.github}
+              aria-label={member.github ? `GitHub profile of ${member.name}` : "GitHub profile not available"}
               className={cn(
                 "p-3 rounded-full transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple",
                 member.github 
@@ -203,7 +211,7 @@ export function TeamSection() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {teamData.map((member, i) => (
-            <TeamCard key={i} member={member} />
+            <TeamCard key={`${member.name}-${i}`} member={member} />
           ))}
         </div>
 

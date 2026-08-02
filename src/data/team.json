@@ -1,8 +1,50 @@
 [
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" },
-  { "name": "Team member", "role": "Add role", "img": null, "bio": "", "linkedin": "", "github": "" }
+  {
+    "name": "Keshav Gehlot",
+    "role": "Beta MLSA & Chapter Lead",
+    "img": "https://avatars.githubusercontent.com/u/108399589?v=4",
+    "bio": "Cloud enthusiast and full-stack developer. Leading the Microsoft Learn Student Ambassadors chapter at SRM. Passionate about Azure and AI.",
+    "linkedin": "https://linkedin.com/in/keshavgehlot",
+    "github": "https://github.com/keshavgehlot18"
+  },
+  {
+    "name": "Priya Sharma",
+    "role": "Alpha MLSA & Technical Lead",
+    "img": null,
+    "bio": "Specializes in Web Technologies and .NET. Helps students build their first applications using Microsoft tools and services.",
+    "linkedin": "https://linkedin.com/",
+    "github": "https://github.com/"
+  },
+  {
+    "name": "Rahul Verma",
+    "role": "Alpha MLSA & Event Coordinator",
+    "img": null,
+    "bio": "Orchestrates hackathons, workshops, and study jams. Ensuring every student gets the most out of our community events.",
+    "linkedin": "https://linkedin.com/",
+    "github": "https://github.com/"
+  },
+  {
+    "name": "Sneha Gupta",
+    "role": "New MLSA & PR Head",
+    "img": null,
+    "bio": "Manages our social media presence and outreach. Spreading the word about tech opportunities on campus.",
+    "linkedin": "https://linkedin.com/",
+    "github": "https://github.com/"
+  },
+  {
+    "name": "Aman Patel",
+    "role": "New MLSA & Design Head",
+    "img": null,
+    "bio": "Creative thinker behind our event posters and UI/UX workshops. Believes in accessible and beautiful design.",
+    "linkedin": "https://linkedin.com/",
+    "github": "https://github.com/"
+  },
+  {
+    "name": "Ananya Desai",
+    "role": "Core Team Member",
+    "img": null,
+    "bio": "Competitive programmer and mentor for Data Structures and Algorithms. Loves solving complex problems.",
+    "linkedin": "https://linkedin.com/",
+    "github": "https://github.com/"
+  }
 ]

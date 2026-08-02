@@ -1,13 +1,11 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { MagneticWrapper } from "./MagneticWrapper";
 
 export function ApplyNowSection() {
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-  useEffect(() => {
-    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }, []);
+  const isReducedMotion = useReducedMotion();
   return (
     <section className="py-24 px-6 relative bg-[#050816] overflow-hidden" id="apply">
       {/* Background glow */}

@@ -1,0 +1,3 @@
+const testUrl = "mailto:mlsasrm14@gmail.com?subject=Sponsorship%20Request%20%E2%80%94%20Platinum%20Tier&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we're%20interested%20in%20the%20Platinum%20sponsorship%20package%20(%E2%82%B915%2C000%2B).%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0AWe%20know%20Platinum%20is%20a%20single-slot%20tier%20%E2%80%94%20happy%20to%20move%20quickly%20if%20there's%20a%20live%20opportunity.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D";
+
+console.log(decodeURIComponent(testUrl.replace("mailto:mlsasrm14@gmail.com?", "")));

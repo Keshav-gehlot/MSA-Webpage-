@@ -1,11 +1,11 @@
 import React from "react";
-import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
+import { motion, useMotionTemplate, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 
 const ShipItGame = lazy(() => import("./ShipItGame"));
 import { Menu, X } from "lucide-react";
 import { MagneticWrapper } from "./MagneticWrapper";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import { cn } from "../lib/utils";
 
 export function Navbar() {
@@ -81,7 +81,7 @@ export function Navbar() {
       style={{ backgroundColor, backdropFilter }}
       className="fixed top-0 inset-x-0 z-50 border-b border-white/10"
     >
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
         <Link to="/" onClick={handleLogoClick} className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm">
           <svg viewBox="0 0 240 92" className="h-[46px] w-auto hover:opacity-90 transition-opacity">
             <defs>
@@ -132,40 +132,69 @@ export function Navbar() {
         <button 
           onClick={() => setIsOpen(!isOpen)} 
           className="md:hidden text-text-muted hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-20 inset-x-0 bg-surface-1 border-b border-white/10 py-4 px-6 flex flex-col gap-4">
-          {links.map((link) => (
-            <a 
-              key={link.label} 
-              href={link.href} 
-              onClick={() => setIsOpen(false)}
-              className={cn(
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm",
-                "font-medium transition-colors",
-                activeSection === link.id ? "text-white" : "text-text-muted hover:text-white"
-              )}
-            >
-              {link.label}
-            </a>
-          ))}
-          <Link 
-            to="/sponsors"
-            onClick={() => setIsOpen(false)}
-            className="text-accent-blue hover:text-white font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
+      {/* Mobile menu drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="md:hidden fixed inset-0 z-40 bg-[#050816]/95 backdrop-blur-lg flex flex-col px-8 pt-32 pb-12 gap-8"
           >
-            Sponsors
-          </Link>
-          <a href="/#contact" onClick={() => setIsOpen(false)} style={{ color: "#000" }} className="mt-2 text-center w-full px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
-            Contact
-          </a>
-        </div>
-      )}
+            {links.map((link, index) => (
+              <motion.a 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 + index * 0.05 }}
+                key={link.label} 
+                href={link.href} 
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm",
+                  "text-4xl font-display font-medium transition-colors",
+                  activeSection === link.id ? "text-white" : "text-text-muted hover:text-white"
+                )}
+              >
+                {link.label}
+              </motion.a>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 + links.length * 0.05 }}
+            >
+              <Link 
+                to="/sponsors"
+                onClick={() => setIsOpen(false)}
+                className="text-accent-blue hover:text-white text-4xl font-display font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm block"
+              >
+                Sponsors
+              </Link>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-auto"
+            >
+              <a href="/#contact" onClick={() => setIsOpen(false)} style={{ color: "#000" }} className="block text-center w-full px-6 py-4 rounded-full bg-white text-black font-semibold text-lg hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                Contact
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
     <Suspense fallback={null}>
       {showGame && <ShipItGame onClose={() => setShowGame(false)} />}

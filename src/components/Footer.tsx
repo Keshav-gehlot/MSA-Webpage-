@@ -1,14 +1,11 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { motion, useInView } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 
 export function Footer() {
   const footerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(footerRef);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   return (
     <footer ref={footerRef} className="relative py-12 px-6 border-t border-white/10 overflow-hidden">

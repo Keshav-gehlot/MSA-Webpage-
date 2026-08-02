@@ -1,8 +1,61 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useInView, useMotionValue, useMotionValueEvent } from "motion/react";
 import { BookOpen, Hammer, Rocket } from "lucide-react";
 import projectsData from "../data/projects.json";
 import { useCountUp } from "../hooks/useCountUp";
+import { MotionValue } from "motion/react";
+import type { LucideIcon } from "lucide-react";
+
+export interface StageData {
+  id: string;
+  title: string;
+  icon: LucideIcon;
+  statValue: number;
+  statSuffix: string;
+  statLabel: string;
+  copy: string;
+  color: string;
+  rgb: string;
+}
+
+interface DesktopStageProps {
+  stage: StageData;
+  i: number;
+  scrollYProgress: MotionValue<number>;
+}
+
+interface MobileStageProps {
+  stage: StageData;
+}
+
+interface IconAnimatorProps {
+  scrollYProgress: MotionValue<number> | null;
+  start: number;
+  Icon: LucideIcon;
+  color: string;
+}
+
+interface StatCounterProps {
+  scrollYProgress: MotionValue<number> | null;
+  start: number;
+  end: number;
+  value: number;
+  suffix: string;
+  label: string;
+  color: string;
+  forceActive?: boolean;
+}
+
+interface BackgroundProps {
+  washProgress: MotionValue<number>;
+  stages: StageData[];
+}
+
+interface ProgressIndicatorProps {
+  progress: MotionValue<number>;
+}
+
 
 export function WhyJoinSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,17 +65,16 @@ export function WhyJoinSection() {
     offset: ["start start", "end end"]
   });
 
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMotion = () => {
-      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    checkMotion();
-    window.addEventListener("resize", checkMotion);
-    return () => window.removeEventListener("resize", checkMotion);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const totalProjects = projectsData.length;
@@ -90,7 +142,7 @@ export function WhyJoinSection() {
   );
 }
 
-function DesktopStageWrapper({ stage, i, scrollYProgress }: any) {
+function DesktopStageWrapper({ stage, i, scrollYProgress }: DesktopStageProps) {
   const start = i * 0.333;
   const end = start + 0.333;
   
@@ -124,7 +176,7 @@ function DesktopStageWrapper({ stage, i, scrollYProgress }: any) {
   )
 }
 
-function MobileStage({ stage }: { stage: any, key?: any }) {
+function MobileStage({ stage }: MobileStageProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   
@@ -148,8 +200,9 @@ function MobileStage({ stage }: { stage: any, key?: any }) {
   );
 }
 
-function IconAnimator({ scrollYProgress, start, Icon, color }: any) {
-  const pathLength = useTransform(scrollYProgress, [start, start + 0.15], [0, 1]);
+function IconAnimator({ scrollYProgress, start, Icon, color }: IconAnimatorProps) {
+  const dummyMotionValue = useMotionValue(0);
+  const pathLength = useTransform(scrollYProgress || dummyMotionValue, [start, start + 0.15], [0, 1]);
   
   return (
      <motion.div 
@@ -176,7 +229,7 @@ function IconAnimator({ scrollYProgress, start, Icon, color }: any) {
   )
 }
 
-function StatCounter({ scrollYProgress, start, end, value, suffix, label, color, forceActive = false }: any) {
+function StatCounter({ scrollYProgress, start, end, value, suffix, label, color, forceActive = false }: StatCounterProps) {
   const [isActive, setIsActive] = useState(false);
   const dummyMotionValue = useMotionValue(0);
   const progressToUse = scrollYProgress || dummyMotionValue;
@@ -207,7 +260,7 @@ function StatCounter({ scrollYProgress, start, end, value, suffix, label, color,
   );
 }
 
-function Background({ washProgress, stages }: any) {
+function Background({ washProgress, stages }: BackgroundProps) {
   const bg1 = useTransform(washProgress, [0, 0.33, 0.66], [0.15, 0, 0]);
   const bg2 = useTransform(washProgress, [0, 0.33, 0.66], [0, 0.15, 0]);
   const bg3 = useTransform(washProgress, [0.33, 0.66, 1], [0, 0, 0.15]);
@@ -221,7 +274,7 @@ function Background({ washProgress, stages }: any) {
   );
 }
 
-function ProgressIndicator({ progress }: { progress: any }) {
+function ProgressIndicator({ progress }: ProgressIndicatorProps) {
   const p1 = useTransform(progress, [0, 0.33], [0, 1]);
   const p2 = useTransform(progress, [0.33, 0.66], [0, 1]);
   const p3 = useTransform(progress, [0.66, 1], [0, 1]);

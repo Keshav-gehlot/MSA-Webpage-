@@ -1,6 +1,6 @@
 import { motion, useAnimationControls } from "motion/react";
 import { Cloud, Database, Send, Shield, Code2, AppWindow, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { MagneticWrapper } from "./MagneticWrapper";
 import { useState, useEffect } from "react";
 

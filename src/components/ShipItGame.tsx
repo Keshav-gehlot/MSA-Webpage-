@@ -1,3 +1,4 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { useEffect, useRef, useState } from "react";
 import { X as CloseIcon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -12,10 +13,7 @@ const GAME_SPEED = 5;
 const GROUND_HEIGHT = 50;
 
 export default function ShipItGame({ onClose }: ShipItGameProps) {
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-  useEffect(() => {
-    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }, []);
+  const isReducedMotion = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);

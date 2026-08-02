@@ -1,9 +1,13 @@
 /** * @license * SPDX-License-Identifier: Apache-2.0 */
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import React, { Suspense, useEffect } from 'react';
 import Lenis from 'lenis';
 import { LandingPage } from './pages/LandingPage';
 import { ScrollProgress } from './components/ScrollProgress';
+import { BackToTop } from './components/BackToTop';
+import { AppProviders } from './providers/AppProviders';
+import { SEO } from './components/SEO';
+import { IntroOverlay } from './components/IntroOverlay';
 
 // Lazy load heavy routes
 const SponsorsAccessPage = React.lazy(() => import('./pages/SponsorsAccessPage').then(module => ({ default: module.SponsorsAccessPage })));
@@ -35,15 +39,21 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <ScrollProgress />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/sponsors" element={<SponsorsAccessPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <AppProviders>
+      <SEO />
+      <BrowserRouter>
+        <ScrollProgress />
+        <BackToTop />
+        <Suspense fallback={<PageLoader />}>
+          <IntroOverlay>
+            <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/sponsors" element={<SponsorsAccessPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          </IntroOverlay>
+        </Suspense>
+      </BrowserRouter>
+    </AppProviders>
   );
 }

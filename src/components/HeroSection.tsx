@@ -1,5 +1,6 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { motion, useMotionTemplate, useScroll, useTransform, useMotionValue, useSpring } from "motion/react";
-import { useRef, useState, useEffect, type MouseEvent, lazy, Suspense } from "react";
+import { useRef, useState, useEffect, type MouseEvent } from "react";
 import { MagneticWrapper } from "./MagneticWrapper";
 
 export function HeroSection() {
@@ -17,12 +18,7 @@ export function HeroSection() {
   const cursorY = useSpring(mouseY, springConfig);
   
   const [isTouch, setIsTouch] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  
-  useEffect(() => {
-    setIsTouch(window.matchMedia('(pointer: coarse)').matches);
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
   
   const requestRef = useRef<number | undefined>(undefined);
   
@@ -275,7 +271,10 @@ export function HeroSection() {
              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
              className="text-3xl md:text-6xl font-display font-medium text-white mb-4 leading-[1.15] md:leading-[1.1]"
            >
-             Microsoft Student Ambassadors
+             Microsoft Learn <br className="md:hidden" />
+             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A4EF] to-[#0078D4]">
+               Student Ambassadors
+             </span>
            </motion.h1>
            <p className="text-sm md:text-xl text-text-muted font-light mb-8 max-w-xl md:leading-relaxed">
              Join a global community of innovators, builders, and future technology leaders shaping the digital world.

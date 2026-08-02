@@ -6,7 +6,7 @@
 
 export const sponsors = [
   { name: "GitHub", logo: "/sponsors/github.svg" },
-  { name: "Microsoft", logo: "/sponsors/microsoft.svg" },
+  { name: "Microsoft", logo: "/sponsors/microsoft-full.svg" },
   { name: "HackerEarth", logo: "/sponsors/hackerearth.svg" },
   { name: "Azure", logo: "/sponsors/azure.svg" },
   { name: "Zebronics", logo: "/sponsors/zebronics.svg" },
@@ -15,13 +15,7 @@ export const sponsors = [
   { name: "The Souled Store", logo: "/sponsors/the-souled-store.svg" },
   { name: "Subway", logo: "/sponsors/subway.svg" },
   { name: "Monster Energy", logo: "/sponsors/monster-energy.svg" },
-  { name: "Roll Over Ice Creams", logo: "/sponsors/roll-over-ice-creams.svg" },
-  { name: "Sunschool", logo: "/sponsors/sunschool.svg" },
   { name: "Forech", logo: "/sponsors/forech.svg" },
-  { name: "Streams", logo: "/sponsors/streams.svg" },
-  { name: "Rock N Roll Café", logo: "/sponsors/rock-n-roll-caf.svg" },
   { name: ".xyz", logo: "/sponsors/xyz.svg" },
-  { name: "CodeSizzler", logo: "/sponsors/codesizzler.svg" },
-  { name: "Altruisty", logo: "/sponsors/altruisty.svg" },
   { name: "Interview Cake", logo: "/sponsors/interview-cake.svg" }
 ];

@@ -313,7 +313,7 @@ export function SponsorsAccessPage() {
                         <div className="sp-tier-scope-label">Investment</div>
                         <div className="sp-tier-scope-val">₹15,000+</div>
                       </div>
-                      <a href="#contact-cta" className="sp-tier-apply">request package</a>
+                      <a href="mailto:mlsasrm14@gmail.com?subject=Sponsorship%20Request%20%E2%80%94%20Platinum%20Tier&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we're%20interested%20in%20the%20Platinum%20sponsorship%20package%20(%E2%82%B915%2C000%2B).%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0AWe%20know%20Platinum%20is%20a%20single-slot%20tier%20%E2%80%94%20happy%20to%20move%20quickly%20if%20there's%20a%20live%20opportunity.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D" className="sp-tier-apply">request package</a>
                     </div>
                   </div>
                   </div>
@@ -352,7 +352,7 @@ export function SponsorsAccessPage() {
                         <div className="sp-tier-scope-label">Investment</div>
                         <div className="sp-tier-scope-val">₹10,000</div>
                       </div>
-                      <a href="#contact-cta" className="sp-tier-apply">request package</a>
+                      <a href="mailto:mlsasrm14@gmail.com?subject=Sponsorship%20Request%20%E2%80%94%20Gold%20Tier&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we're%20interested%20in%20the%20Gold%20sponsorship%20package%20(%E2%82%B910%2C000).%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0ALet%20us%20know%20current%20availability%20and%20turnaround%20for%20onboarding.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D" className="sp-tier-apply">request package</a>
                     </div>
                   </div>
                   </div>
@@ -389,7 +389,7 @@ export function SponsorsAccessPage() {
                         <div className="sp-tier-scope-label">Investment</div>
                         <div className="sp-tier-scope-val">₹5,000</div>
                       </div>
-                      <a href="#contact-cta" className="sp-tier-apply">request package</a>
+                      <a href="mailto:mlsasrm14@gmail.com?subject=Sponsorship%20Request%20%E2%80%94%20Silver%20Tier&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we're%20interested%20in%20the%20Silver%20sponsorship%20package%20(%E2%82%B95%2C000).%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0ALet%20us%20know%20current%20availability%20and%20turnaround%20for%20onboarding.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D" className="sp-tier-apply">request package</a>
                     </div>
                   </div>
                   </div>
@@ -426,7 +426,7 @@ export function SponsorsAccessPage() {
                         <div className="sp-tier-scope-label">Investment</div>
                         <div className="sp-tier-scope-val">Merch & Goodies</div>
                       </div>
-                      <a href="#contact-cta" className="sp-tier-apply">request package</a>
+                      <a href="mailto:mlsasrm14@gmail.com?subject=Sponsorship%20Request%20%E2%80%94%20Bronze%20Tier&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we're%20interested%20in%20the%20Bronze%20sponsorship%20package%20(Merch%20%26%20Goodies).%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0ALet%20us%20know%20current%20availability%20and%20turnaround%20for%20onboarding.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D" className="sp-tier-apply">request package</a>
                     </div>
                   </div>
                   </div>
@@ -550,7 +550,7 @@ export function SponsorsAccessPage() {
           
           <Reveal delay={4}>
             <div className="flex flex-wrap gap-4">
-              <a href="mailto:mlsasrm14@gmail.com?subject=Partner%20With%20Us" style={{ color: "#000" }} className="bg-white text-black font-semibold  py-3.5 px-6 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+              <a href="mailto:mlsasrm14@gmail.com?subject=Partner%20With%20Us&body=Hi%20MSA%20SRM%20team%2C%0A%0A%5BCompany%20Name%5D%20here%20%E2%80%94%20we'd%20like%20to%20explore%20partnering%20with%20MSA%20SRM.%0A%0AA%20bit%20about%20us%3A%20%5Bone%20line%20on%20what%20you%20do%20%2F%20why%20you're%20reaching%20out%5D%0A%0ANot%20sure%20yet%20which%20tier%20fits%20best%20%E2%80%94%20happy%20to%20talk%20through%20options.%0A%0APoint%20of%20contact%3A%20%5BYour%20Name%5D%2C%20%5BRole%5D%2C%20%5BPhone%2FEmail%5D%0A%0ALooking%20forward%20to%20hearing%20back.%0A%0AThanks%2C%0A%5BYour%20Name%5D" style={{ color: "#000" }} className="bg-white text-black font-semibold  py-3.5 px-6 rounded-2xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 text-sm md:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                 Partner With Us →
               </a>
             </div>

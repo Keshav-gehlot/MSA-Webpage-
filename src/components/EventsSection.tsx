@@ -1,18 +1,18 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { Calendar, MapPin, ExternalLink } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 import { MagneticWrapper } from "./MagneticWrapper";
 import events from "../data/events.json";
-import { useState, useRef, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useSearchParams } from "react-router";
 
 const categories = ["All", "Workshop", "Hackathon", "Social"];
 
 export function EventsSection() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentCategory = searchParams.get("category") || "All";
-  const [reducedMotion, setReducedMotion] = useState(false);
-  useEffect(() => { setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
+  const reducedMotion = useReducedMotion();
   
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -22,9 +22,11 @@ export function EventsSection() {
 
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const filteredEvents = currentCategory === "All" 
-    ? events 
-    : events.filter(e => e.category === currentCategory);
+  const filteredEvents = useMemo(() => {
+    return currentCategory === "All"
+      ? events
+      : events.filter((e) => e.category === currentCategory);
+  }, [currentCategory]);
 
   const handleFilter = (cat: string) => {
     if (cat === "All") {
@@ -49,6 +51,7 @@ export function EventsSection() {
               <button
                 key={cat}
                 onClick={() => handleFilter(cat)}
+                aria-pressed={currentCategory === cat}
                 className={cn(
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black",
                   "px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300",
@@ -132,7 +135,7 @@ export function EventsSection() {
                             {evt.bullets && evt.bullets.length > 0 && (
                               <ul className="list-disc pl-5 mb-6 text-sm md:text-base text-text-muted space-y-1">
                                 {evt.bullets.map((bullet: string, i: number) => (
-                                  <li key={i}>{bullet}</li>
+                                  <li key={bullet}>{bullet}</li>
                                 ))}
                               </ul>
                             )}

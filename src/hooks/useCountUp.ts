@@ -1,3 +1,4 @@
+import { useReducedMotion } from "./useReducedMotion";
 import { useMotionValue, useSpring, useTransform, useMotionValueEvent } from "motion/react";
 import { useState, useEffect } from "react";
 
@@ -7,6 +8,7 @@ export function useCountUp(from: number, to: number, start: boolean, delay: numb
   const [reducedMotion, setReducedMotion] = useState(false);
 
   const motionValue = useMotionValue(from);
+  const isReduced = useReducedMotion();
   const springValue = useSpring(motionValue, {
     damping: 30,
     stiffness: 100,
@@ -17,15 +19,12 @@ export function useCountUp(from: number, to: number, start: boolean, delay: numb
 
   useMotionValueEvent(roundedValue, "change", (latest) => {
     setDisplayValue(latest);
-    if (latest === to && !reducedMotion) {
+    if (latest === to && !isReduced) {
       setIsFinished(true);
     }
   });
 
   useEffect(() => {
-    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setReducedMotion(isReduced);
-
     if (start) {
       if (isReduced) {
         setDisplayValue(to);
@@ -40,7 +39,8 @@ export function useCountUp(from: number, to: number, start: boolean, delay: numb
       setDisplayValue(from);
       setIsFinished(false);
     }
-  }, [start, to, from, motionValue, delay]);
+    return undefined;
+  }, [start, to, from, motionValue, delay, isReduced]);
 
   return { displayValue, isFinished };
 }

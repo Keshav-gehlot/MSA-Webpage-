@@ -1,3 +1,4 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
 
@@ -28,12 +29,7 @@ export function TiltCard({ children, className = "", maxRotation = 8, ...rest }:
   );
 
   const [isTouch, setIsTouch] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (isTouch || reducedMotion) return;

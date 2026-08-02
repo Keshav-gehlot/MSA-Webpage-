@@ -1,3 +1,4 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 import testimonials from "../data/testimonials.json";
@@ -7,11 +8,7 @@ function TypewriterText({ text, delay = 0 }: { text: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [displayedText, setDisplayedText] = useState("");
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!isInView) return;

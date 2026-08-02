@@ -1,15 +1,5 @@
-<svg fill="#ffffff" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="20" fill="#ffffff" fill-opacity="0.1"/>
-      <style>
-        .sponsor-initials {
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-          font-weight: 700;
-          font-size: 40px;
-          letter-spacing: 0.05em;
-          text-anchor: middle;
-          dominant-baseline: central;
-          fill: #ffffff;
-        }
-      </style>
-      <text x="50" y="52" class="sponsor-initials">B</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 100">
+  <text x="10" y="70" font-family="Arial" font-weight="900" font-size="60" fill="#ffffff" letter-spacing="-2">bewakoof</text>
+  <path d="M 215 30 Q 230 15 245 30" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+  <circle cx="230" cy="50" r="10" fill="#ffffff" />
+</svg>

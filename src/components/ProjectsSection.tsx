@@ -1,13 +1,20 @@
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import { ExternalLink, FolderGit2 } from "lucide-react";
 import { motion } from "motion/react";
 import projects from "../data/projects.json";
 import { memo, useState, useEffect } from "react";
+export interface ProjectData {
+  title: string;
+  desc: string;
+  bullets?: string[];
+  tech: string;
+  repo: string;
+  archived?: boolean;
+}
 
-const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-  useEffect(() => {
-    setIsReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }, []);
+
+const ProjectCard = memo(({ project, i }: { project: ProjectData, i: number }) => {
+  const isReducedMotion = useReducedMotion();
   return (
     <motion.div
       initial={{ opacity: 0, y: 14, scale: 0.95 }}
@@ -47,6 +54,7 @@ const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
           <a 
             href={project.repo} 
             target="_blank" rel="noopener noreferrer" 
+            aria-label={`View repository for ${project.title}`}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:text-accent-blue transition-colors ml-auto relative z-10"
           >
             Repository <ExternalLink size={16} />
@@ -58,6 +66,8 @@ const ProjectCard = memo(({ project, i }: { project: any, i: number }) => {
       <a 
         href={project.repo} 
         target="_blank" rel="noopener noreferrer" 
+        tabIndex={-1}
+        aria-hidden="true"
         className="w-full md:w-32 lg:w-40 h-32 md:h-auto rounded-2xl border border-white/10 flex flex-col items-center justify-center shrink-0 transition-colors relative overflow-hidden bg-gradient-to-br from-accent-blue/10 via-transparent to-transparent group-hover:from-accent-blue/20 group-hover:via-accent-blue/10 group-hover:border-accent-blue/30"
       >
         <FolderGit2 size={32} className="text-white/60 mb-2 group-hover:text-accent-blue transition-colors relative z-10 group-hover:scale-110 duration-500" />
