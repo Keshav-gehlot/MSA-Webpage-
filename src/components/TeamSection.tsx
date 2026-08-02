@@ -124,9 +124,7 @@ function TeamCard({ member }: { member: TeamMember }) {
           </div>
           
           <div className="mt-6 text-center w-full">
-            <h3 className="text-xl md:text-2xl font-display font-semibold text-white truncate">
-              {member.name}
-            </h3>
+            {/* Name removed as requested */}
             <p className="text-sm md:text-base text-accent-blue font-medium mt-1 truncate">
               {member.role}
             </p>

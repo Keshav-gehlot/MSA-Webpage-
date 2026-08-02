@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface IntroAnimationProps {
@@ -9,38 +9,48 @@ const JOURNEY = [
   "Learn",
   "Build",
   "Lead",
-  "Innovate",
-  "Microsoft Learn Student Ambassadors"
+  "Innovate"
 ];
 
 export function IntroAnimation({ onComplete }: IntroAnimationProps) {
-  const [step, setStep] = useState(0);
-  const [phase, setPhase] = useState<'animating' | 'done'>('animating');
+  const [phase, setPhase] = useState<'journey' | 'reveal' | 'done'>('journey');
+  const [journeyStep, setJourneyStep] = useState(0);
+
+  // Memoize random particles to avoid re-renders
+  const particles = useMemo(() => {
+    return Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: 60 + Math.random() * 40,
+      size: Math.random() * 3 + 1,
+      color: ['#00A4EF', '#7FBA00', '#FFB900', '#F25022', '#FFFFFF'][Math.floor(Math.random() * 5)],
+      delay: Math.random() * 1.5,
+      duration: 2 + Math.random() * 2
+    }));
+  }, []);
 
   useEffect(() => {
-    // Timing for each word
-    const timings = [
-      800,   // Learn -> Build
-      1600,  // Build -> Lead
-      2400,  // Lead -> Innovate
-      3200,  // Innovate -> MLSA
-      5000,  // MLSA -> dissolve
-    ];
-
-    const timeouts = timings.map((time, index) => 
-      setTimeout(() => setStep(index + 1), time)
-    );
-
-    const doneTimeout = setTimeout(() => {
-      setPhase('done');
-      onComplete();
-    }, 6000);
-
-    return () => {
-      timeouts.forEach(clearTimeout);
-      clearTimeout(doneTimeout);
-    };
-  }, [onComplete]);
+    if (phase === 'journey') {
+      const interval = setInterval(() => {
+        setJourneyStep(prev => {
+          if (prev >= JOURNEY.length - 1) {
+            clearInterval(interval);
+            setTimeout(() => setPhase('reveal'), 800);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 900);
+      return () => clearInterval(interval);
+    } else if (phase === 'reveal') {
+      const doneTimeout = setTimeout(() => {
+        setPhase('done');
+        onComplete();
+      }, 4800);
+      return () => clearTimeout(doneTimeout);
+    }
+    return undefined;
+  }, [phase, onComplete]);
 
   return (
     <motion.div 
@@ -50,39 +60,127 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
       transition={{ duration: 1.5, ease: "easeInOut" }}
       style={{ pointerEvents: phase === 'done' ? 'none' : 'auto' }}
     >
-      {/* Subtle background glow */}
-      <motion.div 
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,120,212,0.08)_0%,rgba(0,0,0,1)_100%)]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-      />
-
       {/* Slow camera zoom effect */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
         initial={{ scale: 1 }}
-        animate={{ scale: 1.05 }}
-        transition={{ duration: 6, ease: "linear" }}
+        animate={{ scale: phase === 'done' ? 1.15 : 1.05 }}
+        transition={{ duration: 8, ease: "linear" }}
       >
         <AnimatePresence mode="wait">
-          {step < JOURNEY.length && (
+          {phase === 'journey' && (
             <motion.div
-              key={step}
+              key={journeyStep}
               initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: -15, filter: 'blur(8px)' }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className={`text-center font-display tracking-wide px-6 ${
-                step === JOURNEY.length - 1 
-                  ? "text-3xl md:text-5xl lg:text-6xl font-medium text-white" 
-                  : "text-4xl md:text-6xl font-light text-[#00A4EF]"
-              }`}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="text-4xl md:text-6xl font-light text-white font-display tracking-wide"
             >
-              {JOURNEY[step]}
+              {JOURNEY[journeyStep]}
             </motion.div>
           )}
         </AnimatePresence>
+
+        <AnimatePresence>
+          {phase === 'reveal' && (
+            <motion.div 
+              className="relative flex flex-col items-center justify-center text-center z-10 w-full px-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)', y: -20 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            >
+              {/* MICROSOFT */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="text-xs md:text-sm font-medium tracking-[0.4em] uppercase text-white/70 mb-3 ml-2"
+              >
+                Microsoft
+              </motion.div>
+              
+              <div className="flex flex-col md:flex-row md:gap-3 items-center overflow-hidden">
+                {/* Student */}
+                <motion.div
+                  initial={{ x: -30, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                  className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white"
+                >
+                  Student
+                </motion.div>
+                {/* Ambassadors */}
+                <motion.div
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+                  className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white"
+                >
+                  Ambassadors
+                </motion.div>
+              </div>
+
+              {/* Blue Light Sweep over the text */}
+              <motion.div 
+                className="absolute inset-0 z-20 pointer-events-none mix-blend-screen"
+                initial={{ x: '-100%', opacity: 0 }}
+                animate={{ x: '100%', opacity: [0, 0.4, 0] }}
+                transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(0, 164, 239, 0.8), transparent)',
+                  transform: 'skewX(-20deg)',
+                  width: '200%'
+                }}
+              />
+
+              {/* Subtitle */}
+              <motion.div
+                initial={{ opacity: 0, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, filter: 'blur(0px)' }}
+                transition={{ duration: 1, delay: 1.6, ease: "easeOut" }}
+                className="mt-6 text-sm md:text-base text-white/50 font-light tracking-widest flex flex-col items-center gap-1"
+              >
+                <span>SRM Institute of Science and Technology</span>
+                <span className="text-xs">Kattankulathur</span>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Particles during reveal/dissolve */}
+        <AnimatePresence>
+          {phase === 'reveal' && (
+            <motion.div 
+              className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              {particles.map((p) => (
+                <motion.div
+                  key={p.id}
+                  className="absolute rounded-full blur-[1px]"
+                  style={{
+                    left: `${p.x}%`,
+                    top: `${p.y}%`,
+                    width: p.size,
+                    height: p.size,
+                    backgroundColor: p.color,
+                  }}
+                  initial={{ opacity: 0, y: 0 }}
+                  animate={{ opacity: [0, 0.8, 0], y: -200 }}
+                  transition={{ 
+                    duration: p.duration, 
+                    delay: 2.5 + p.delay, // Starts breaking into particles as it dissolves
+                    ease: "easeOut" 
+                  }}
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </motion.div>
     </motion.div>
   );

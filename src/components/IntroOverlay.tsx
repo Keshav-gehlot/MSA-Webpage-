@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useFirstVisit } from '../hooks/useFirstVisit';
 import { IntroAnimation } from './IntroAnimation';
 import { AnimatePresence } from 'motion/react';
 
 export function IntroOverlay({ children }: { children: React.ReactNode }) {
-  const { isFirstVisit, isLoading } = useFirstVisit();
   const [introComplete, setIntroComplete] = useState(false);
   const [appReady, setAppReady] = useState(false);
 
@@ -17,7 +15,7 @@ export function IntroOverlay({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading || !appReady) {
+  if (!appReady) {
     return (
       <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
         {/* Empty black screen to prevent flash before intro starts */}
@@ -25,7 +23,7 @@ export function IntroOverlay({ children }: { children: React.ReactNode }) {
     );
   }
 
-  const showIntro = isFirstVisit && !introComplete;
+  const showIntro = !introComplete;
 
   return (
     <>
